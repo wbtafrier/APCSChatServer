@@ -9,7 +9,7 @@ import com.compsci.entity.Player;
 
 public class SloverseServer {
 
-	private static boolean listening;
+	private static boolean listening = true;
 	private static int portNumber = 608;
 	
 	private static List<Player> connectedUsers = new ArrayList<>();

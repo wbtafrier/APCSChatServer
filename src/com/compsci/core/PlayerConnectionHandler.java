@@ -9,6 +9,7 @@ import java.net.Socket;
 public class PlayerConnectionHandler extends Thread {
 
 	private Socket socket;
+	private String userInput, serverOutput;
 	
 	public PlayerConnectionHandler(Socket incomingConnection) {
 		super("MultiplayerThread");
@@ -25,12 +26,17 @@ public class PlayerConnectionHandler extends Thread {
 			
 			out.println("Welcome to the server!");
 			
-			while () {
+			while ((userInput = in.readLine()) != null) {
+				serverOutput = "Echo: " + userInput;
+				out.println(serverOutput);
 				
+				if (userInput.equalsIgnoreCase("Bye")) {
+					break;
+				}
 			}
-			
+			socket.close();
 		} catch (IOException e) {
-			
+			e.printStackTrace();
 		}
 	}
 }
