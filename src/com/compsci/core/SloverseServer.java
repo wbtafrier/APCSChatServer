@@ -1,9 +1,9 @@
 package com.compsci.core;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 
+import com.compsci.display.GuiStream;
 import com.compsci.display.ServerFrame;
 
 public final class SloverseServer {
@@ -14,13 +14,11 @@ public final class SloverseServer {
 	public static void main(String[] args) {
 		
 		ServerFrame fr = new ServerFrame();
+		System.setOut(GuiStream.printStream);
+		System.setErr(GuiStream.printStream);
+		System.out.println("Welcome to the server control panel!");
 		
 		try (ServerSocket socket = new ServerSocket(portNumber);) {
-			
-			InetAddress ip = socket.getInetAddress();
-			System.out.println(ip);
-			
-			System.out.println("Starting server!");
 			
 			while (listening) {
 				new PlayerConnectionThread(socket.accept()).start();
