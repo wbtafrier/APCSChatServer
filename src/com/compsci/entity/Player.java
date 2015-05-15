@@ -2,7 +2,13 @@ package com.compsci.entity;
 
 public class Player {
 
-	public Player() {
-		
+	private String userName;
+	
+	public Player(String name) {
+		userName = name;
+	}
+	
+	public String getName() {
+		return userName;
 	}
 }
