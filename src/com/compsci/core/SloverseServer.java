@@ -1,7 +1,6 @@
 package com.compsci.core;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 
 import com.compsci.display.ServerFrame;
@@ -16,11 +15,6 @@ public final class SloverseServer {
 		ServerFrame fr = new ServerFrame();
 		
 		try (ServerSocket socket = new ServerSocket(portNumber);) {
-			
-			InetAddress ip = socket.getInetAddress();
-			System.out.println(ip);
-			
-			System.out.println("Starting server!");
 			
 			while (listening) {
 				new PlayerConnectionThread(socket.accept()).start();
