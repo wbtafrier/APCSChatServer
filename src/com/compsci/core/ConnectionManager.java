@@ -34,11 +34,13 @@ public class ConnectionManager {
 		connectionThreads.add(userThread.getThreadID(), userThread);
 		
 		userThread.getWriter().println("Please enter your username: ");
+		
 		Player newUser = new Player(userThread.getReader().readLine());
 		userThread.setPlayer(newUser);
 		
 		for (PlayerConnectionThread thread : connectionThreads) {
-			thread.getWriter().println(newUser.getName() + " joined the server!");
+			if (!thread.equals(userThread))
+				thread.getWriter().println(newUser.getName() + " joined the server!");
 		}
 	}
 	

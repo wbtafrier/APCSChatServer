@@ -3,8 +3,6 @@ package com.compsci.format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import com.compsci.display.DisplayHandler;
-
 public class GuiTextHandler {
 
 	public static String formatText(String username, String input) {
@@ -21,7 +19,7 @@ public class GuiTextHandler {
 		if (input == null) {
 			return;
 		}
-		String oldText = DisplayHandler.outPane.getText();
+		String oldText = FrameLayoutHandler.outPane.getText();
 		String trimmed = input.trim();
 		if (!verifyMessage(trimmed)) {
 			return;
@@ -31,7 +29,7 @@ public class GuiTextHandler {
 		}
 		
 		String formatted = formatText(username, trimmed);
-		DisplayHandler.outPane.setText(oldText + formatted + "\n\n");
+		FrameLayoutHandler.outPane.setText(oldText + formatted + "\n\n");
 	}
 	
 	public static String formatText(String input) {

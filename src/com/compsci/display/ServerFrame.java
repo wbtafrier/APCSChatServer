@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import com.compsci.format.FrameLayoutHandler;
+
 public class ServerFrame extends JFrame {
 
 	private static final long serialVersionUID = 1707966321497413110L;
@@ -12,7 +14,7 @@ public class ServerFrame extends JFrame {
 
 	public ServerFrame() {
 		super("Sloverse Server");
-		DisplayHandler.setupFrame(this);
+		FrameLayoutHandler.setupFrame(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.setMinimumSize(MINIMUM_SIZE);

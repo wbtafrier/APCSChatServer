@@ -1,4 +1,4 @@
-package com.compsci.display;
+package com.compsci.format;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +14,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.StyledDocument;
 
-public class DisplayHandler {
+import com.compsci.display.DisplayInfo;
+import com.compsci.display.ServerFrame;
+import com.compsci.util.CommandAction;
+
+public class FrameLayoutHandler {
 	
 	private static ServerFrame serverFrame;
 	
@@ -43,7 +47,7 @@ public class DisplayHandler {
 			
 			outPane.setFont(new Font(fontName, Font.PLAIN, 12));
 			
-			inField.addActionListener(new EnterAction());
+			inField.addActionListener(new CommandAction());
 		}
 	}
 	
@@ -54,7 +58,7 @@ public class DisplayHandler {
 		mainPanel.setLayout(gbl);
 		
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = new Insets(20, 20, 30, 20);
+		gbc.insets = new Insets(20, 20, 20, 20);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -64,7 +68,7 @@ public class DisplayHandler {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		mainPanel.add(scrollPane, gbc);
 		
-		gbc.insets = new Insets(0, 20, 40, 20);
+		gbc.insets = new Insets(0, 20, 20, 20);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.weightx = gbc.weighty = 0.0;
