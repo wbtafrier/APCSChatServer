@@ -14,19 +14,17 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.StyledDocument;
 
-import com.compsci.util.GraphicsHelper;
-
 public class DisplayHandler {
 	
 	private static ServerFrame serverFrame;
 	
 	static JPanel mainPanel = new JPanel();
 	
-	static JMenuBar menuBar = new JMenuBar();
-	static JTextPane outPane = new JTextPane();
-	static StyledDocument doc = outPane.getStyledDocument();
-	static JScrollPane scrollPane = new JScrollPane(outPane);
-	static JTextField inField = new JTextField();
+	public static JMenuBar menuBar = new JMenuBar();
+	public static JTextPane outPane = new JTextPane();
+	public static StyledDocument doc = outPane.getStyledDocument();
+	public static JScrollPane scrollPane = new JScrollPane(outPane);
+	public static JTextField inField = new JTextField();
 	
 	public static void setupFrame(ServerFrame frame) {
 		if (frame != null) {		
@@ -39,7 +37,7 @@ public class DisplayHandler {
 			outPane.setBackground(new Color(200, 200, 200));
 			
 			String fontName = "Consolas";
-			if (!GraphicsHelper.isFontInstalled(fontName)) {
+			if (!DisplayInfo.isFontInstalled(fontName)) {
 				fontName = "Courier New";
 			}
 			

@@ -5,27 +5,15 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.compsci.format.GuiTextHandler;
+
 public class EnterAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(DisplayHandler.inField)) {
-			
-			if (DisplayHandler.inField.getText().equalsIgnoreCase("stop")) {
-				DisplayHandler.getFrame().dispose();
-				System.exit(0);
-			}
-			
-			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-			String time = sdf.format(cal.getTime()) + " > ";
-			String newLine = "\n";
-			if (DisplayHandler.outPane.getText().length() <= 0) {
-				newLine = "";
-			}
-			
-			DisplayHandler.outPane.setText(DisplayHandler.outPane.getText() + 
-					newLine + time + DisplayHandler.inField.getText() + "\n");
+			String input = DisplayHandler.inField.getText();
+			GuiTextHandler.writeToGui("SERVER", input);
 			DisplayHandler.inField.setText("");
 			
 		}

@@ -27,4 +27,15 @@ public abstract class DisplayInfo {
 	public static Dimension getScreenSize() {
 		return screenSize;
 	}
+	
+	public static boolean isFontInstalled(String fontName) {
+		String[] fonts = ge.getAvailableFontFamilyNames();
+		
+		for (String s : fonts) {
+			if (s.equals(fontName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
