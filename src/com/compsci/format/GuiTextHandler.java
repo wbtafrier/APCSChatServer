@@ -3,6 +3,8 @@ package com.compsci.format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.compsci.display.FrameLayoutHandler;
+
 public class GuiTextHandler {
 
 	public static String formatText(String username, String input) {

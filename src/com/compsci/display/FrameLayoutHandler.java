@@ -1,4 +1,4 @@
-package com.compsci.format;
+package com.compsci.display;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,15 +7,16 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.text.DefaultCaret;
 import javax.swing.text.StyledDocument;
 
-import com.compsci.display.DisplayInfo;
-import com.compsci.display.ServerFrame;
 import com.compsci.util.CommandAction;
 
 public class FrameLayoutHandler {
@@ -25,6 +26,7 @@ public class FrameLayoutHandler {
 	static JPanel mainPanel = new JPanel();
 	
 	public static JMenuBar menuBar = new JMenuBar();
+	public static JMenu fileMenu = new JMenu("File");
 	public static JTextPane outPane = new JTextPane();
 	public static StyledDocument doc = outPane.getStyledDocument();
 	public static JScrollPane scrollPane = new JScrollPane(outPane);
@@ -33,11 +35,18 @@ public class FrameLayoutHandler {
 	public static void setupFrame(ServerFrame frame) {
 		if (frame != null) {		
 			serverFrame = frame;
+			
+			menuBar.add(fileMenu);
 			serverFrame.setJMenuBar(menuBar);
 			addGridBag();
 			serverFrame.add(mainPanel);
+			serverFrame.addWindowListener(new WindowListener());
+			
+			outPane.addFocusListener(new PaneFocusListener());
 			outPane.setDragEnabled(true);
 			outPane.setEditable(false);
+			DefaultCaret caret = (DefaultCaret)outPane.getCaret();
+			caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 			outPane.setBackground(new Color(200, 200, 200));
 			
 			String fontName = "Consolas";

@@ -3,7 +3,7 @@ package com.compsci.util;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.compsci.format.FrameLayoutHandler;
+import com.compsci.display.FrameLayoutHandler;
 import com.compsci.format.GuiTextHandler;
 
 public class CommandAction implements ActionListener {

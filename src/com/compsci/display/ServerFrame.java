@@ -4,7 +4,6 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import com.compsci.format.FrameLayoutHandler;
 
 public class ServerFrame extends JFrame {
 
