@@ -3,12 +3,20 @@ package com.compsci.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import com.compsci.entity.Player;
+import com.compsci.format.GuiTextHandler;
+import com.compsci.util.SloverseLogger;
 
 public class ConnectionManager {
 
 	private static List<PlayerConnectionThread> connectionThreads = new ArrayList<PlayerConnectionThread>();
+	private static boolean displayUserMessage = true;
+	
+	public static synchronized void setDisplayUserMessage(boolean b) {
+		displayUserMessage = b;
+	}
 	
 	public static synchronized List<String> getUserNames() {
 		List<String> userNames = new ArrayList<>();
@@ -23,10 +31,21 @@ public class ConnectionManager {
 		return connectionThreads;
 	}
 	
-	public static synchronized void sendMessage(String message) {
+	public static synchronized void sendMessage(PlayerConnectionThread thread, String message) {
 		
-		for (PlayerConnectionThread thread : connectionThreads) {
-			thread.getWriter().println(message);
+		if (displayUserMessage)
+			SloverseLogger.write(Level.INFO, thread.getPlayer().getName(), message);
+		
+		for (PlayerConnectionThread t : connectionThreads) {
+			t.getWriter().println(GuiTextHandler.formatText(thread.getPlayer().getName(), message));
+		}
+	}
+	
+	public static synchronized void sendBroadcast(String label, String message) {
+		SloverseLogger.write(Level.INFO, label, message);
+		
+		for (PlayerConnectionThread t : connectionThreads) {
+			t.getWriter().println(GuiTextHandler.formatText(label, message));
 		}
 	}
 	
@@ -38,9 +57,11 @@ public class ConnectionManager {
 		Player newUser = new Player(userThread.getReader().readLine());
 		userThread.setPlayer(newUser);
 		
+		String welcomeString = SloverseLogger.write(Level.INFO, "SERVER", newUser.getName() + " joined the server!");
+		
 		for (PlayerConnectionThread thread : connectionThreads) {
 			if (!thread.equals(userThread))
-				thread.getWriter().println(newUser.getName() + " joined the server!");
+				thread.getWriter().println(welcomeString);
 		}
 	}
 	
@@ -50,8 +71,10 @@ public class ConnectionManager {
 		connectionThreads.remove(userThread.getThreadID());
 		compressIDs(userThread.getThreadID());
 		
+		String exitString = SloverseLogger.write(Level.INFO, "SERVER", userThread.getPlayer().getName() + " left the server!");
+		
 		for (PlayerConnectionThread thread : connectionThreads) {
-			thread.getWriter().println(userThread.getPlayer().getName() + " left the server.");
+			thread.getWriter().println(exitString);
 		}
 	}
 	
