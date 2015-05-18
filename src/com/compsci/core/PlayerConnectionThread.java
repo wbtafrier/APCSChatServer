@@ -40,8 +40,8 @@ public class PlayerConnectionThread extends Thread {
 			welcomeMessage();
 			
 			while ((userInput = in.readLine()) != null) {
-				serverOutput = user.getName() + ": " + userInput;
-				ConnectionManager.sendMessage(serverOutput);
+				serverOutput = userInput;
+				ConnectionManager.sendMessage(this, serverOutput);
 				
 				if (userInput.equalsIgnoreCase("Bye")) {
 					break;
@@ -56,15 +56,7 @@ public class PlayerConnectionThread extends Thread {
 	
 	private synchronized void welcomeMessage() {
 		int otherUsers = (ConnectionManager.getConnectedThreads().size() - 1);
-		String welcome;
-		
-		if (otherUsers == 1) {
-			welcome = "Welcome to the server! There is " + otherUsers + " other user online.";
-		}
-		else {
-			welcome = "Welcome to the server! There are " + otherUsers + " other users online.";
-		}
-		output.println(welcome);
+		output.println("Welcome to the server! Other users online: " + otherUsers);
 	}
 	
 	public synchronized Player getPlayer() {
