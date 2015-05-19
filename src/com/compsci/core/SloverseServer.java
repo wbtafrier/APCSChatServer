@@ -19,7 +19,6 @@ public final class SloverseServer {
 		GuiTextHandler.writeToGui("SERVER", "Welcome to the server control panel!");
 		
 		try (ServerSocket socket = new ServerSocket(portNumber);) {
-			
 			while (listening) {
 				new PlayerConnectionThread(socket.accept()).start();
 			}

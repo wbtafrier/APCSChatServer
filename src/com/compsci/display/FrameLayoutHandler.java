@@ -5,14 +5,17 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.StyledDocument;
 
@@ -26,15 +29,25 @@ public class FrameLayoutHandler {
 	
 	public static JMenuBar menuBar = new JMenuBar();
 	public static JMenu fileMenu = new JMenu("File");
+	public static JMenuItem propertiesItem = new JMenuItem("Properties...", KeyEvent.VK_P);
+	public static JMenuItem exitItem = new JMenuItem("Exit");
 	public static JTextPane outPane = new JTextPane();
 	public static StyledDocument doc = outPane.getStyledDocument();
 	public static JScrollPane scrollPane = new JScrollPane(outPane);
 	public static JTextField inField = new JTextField();
 	
+	private static MenuListener menuListener = new MenuListener(); 
+	
 	public static void setupFrame(ServerFrame frame) {
 		if (frame != null) {		
 			serverFrame = frame;
 			
+			fileMenu.add(propertiesItem);
+			exitItem.addActionListener(menuListener);
+			exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, KeyEvent.ALT_MASK));
+			exitItem.setToolTipText("Stops the server and exits the server window.");
+			fileMenu.add(exitItem);
+			fileMenu.setToolTipText("File functions enable the user to interact with the server window.");
 			menuBar.add(fileMenu);
 			serverFrame.setJMenuBar(menuBar);
 			addGridBag();
