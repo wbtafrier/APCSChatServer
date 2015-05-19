@@ -39,7 +39,7 @@ public class PlayerConnectionThread extends Thread {
 			
 			welcomeMessage();
 			
-			while ((userInput = in.readLine()) != null) {
+			while (SloverseServer.isRunning() && (userInput = input.readLine()) != null) {
 				serverOutput = userInput;
 				ConnectionManager.sendMessage(this, serverOutput);
 				
@@ -48,7 +48,6 @@ public class PlayerConnectionThread extends Thread {
 				}
 			}
 			ConnectionManager.removeUser(this);
-			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

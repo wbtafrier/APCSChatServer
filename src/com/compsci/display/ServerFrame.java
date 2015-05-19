@@ -1,8 +1,12 @@
 package com.compsci.display;
 
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+
+import com.compsci.core.SloverseServer;
 
 
 public class ServerFrame extends JFrame {
@@ -15,6 +19,7 @@ public class ServerFrame extends JFrame {
 		super("Sloverse Server");
 		FrameLayoutHandler.setupFrame(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.addWindowListeners();
 		
 		this.setMinimumSize(MINIMUM_SIZE);
 		this.setMaximumSize(MAXIMUM_SIZE);
@@ -22,5 +27,16 @@ public class ServerFrame extends JFrame {
 		
 		this.pack();
 		this.setVisible(true);
+	}
+	
+	private void addWindowListeners() {
+		
+		addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent we) {
+				SloverseServer.closeServer();
+			}
+		});
 	}
 }

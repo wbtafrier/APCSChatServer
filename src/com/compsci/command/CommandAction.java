@@ -1,11 +1,10 @@
-package com.compsci.util;
+package com.compsci.command;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.compsci.core.ConnectionManager;
 import com.compsci.display.FrameLayoutHandler;
-import com.compsci.format.CommandHub;
+import com.compsci.format.GuiTextHandler;
 
 public class CommandAction implements ActionListener {
 
@@ -14,10 +13,7 @@ public class CommandAction implements ActionListener {
 		if (e.getSource().equals(FrameLayoutHandler.inField)) {
 			
 			String input = FrameLayoutHandler.inField.getText();
-			
-			if (!CommandHub.isCommand(input)) {
-				ConnectionManager.sendBroadcast("SERVER", input);
-			}
+			GuiTextHandler.writeToGui("SERVER", input);
 			FrameLayoutHandler.inField.setText("");
 		}
 	}

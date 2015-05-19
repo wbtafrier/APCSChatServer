@@ -16,7 +16,7 @@ import javax.swing.JTextPane;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.StyledDocument;
 
-import com.compsci.util.CommandAction;
+import com.compsci.command.CommandAction;
 
 public class FrameLayoutHandler {
 	

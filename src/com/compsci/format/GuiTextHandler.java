@@ -3,6 +3,7 @@ package com.compsci.format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.compsci.command.CommandHub;
 import com.compsci.display.FrameLayoutHandler;
 
 public class GuiTextHandler {
@@ -27,16 +28,17 @@ public class GuiTextHandler {
 			return;
 		}
 		
-		String oldText = FrameLayoutHandler.outPane.getText();
 		String trimmed = input.trim();
-		
 		if (!verifyMessage(trimmed)) {
 			return;
 		}
 		
-		if (CommandHub.isCommand(trimmed)) {
+		if (CommandHub.isCommandFormat(trimmed)) {
 			CommandHub.computeCommand(trimmed);
+			return;
 		}
+		
+		String oldText = FrameLayoutHandler.outPane.getText();
 		
 		String formatted = formatTextWithTime(label, input);
 		FrameLayoutHandler.outPane.setText(oldText + formatted + "\n");

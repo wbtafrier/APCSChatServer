@@ -3,11 +3,9 @@ package com.compsci.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import com.compsci.entity.Player;
 import com.compsci.format.GuiTextHandler;
-import com.compsci.util.SloverseLogger;
 
 public class ConnectionManager {
 
@@ -34,7 +32,7 @@ public class ConnectionManager {
 	public static synchronized void sendMessage(PlayerConnectionThread thread, String message) {
 		
 		if (displayUserMessage)
-			SloverseLogger.write(Level.INFO, thread.getPlayer().getName(), message);
+			GuiTextHandler.writeToGui(thread.getPlayer().getName(), message);
 		
 		for (PlayerConnectionThread t : connectionThreads) {
 			t.getWriter().println(GuiTextHandler.formatText(thread.getPlayer().getName(), message));
@@ -42,7 +40,7 @@ public class ConnectionManager {
 	}
 	
 	public static synchronized void sendBroadcast(String label, String message) {
-		SloverseLogger.write(Level.INFO, label, message);
+		GuiTextHandler.writeToGui(label, message);
 		
 		for (PlayerConnectionThread t : connectionThreads) {
 			t.getWriter().println(GuiTextHandler.formatText(label, message));
@@ -57,11 +55,12 @@ public class ConnectionManager {
 		Player newUser = new Player(userThread.getReader().readLine());
 		userThread.setPlayer(newUser);
 		
-		String welcomeString = SloverseLogger.write(Level.INFO, "SERVER", newUser.getName() + " joined the server!");
+		String welcomeText = newUser.getName() + " joined the server!";
+		GuiTextHandler.writeToGui("SERVER", welcomeText);
 		
 		for (PlayerConnectionThread thread : connectionThreads) {
 			if (!thread.equals(userThread))
-				thread.getWriter().println(welcomeString);
+				thread.getWriter().println(welcomeText);
 		}
 	}
 	
@@ -71,11 +70,18 @@ public class ConnectionManager {
 		connectionThreads.remove(userThread.getThreadID());
 		compressIDs(userThread.getThreadID());
 		
-		String exitString = SloverseLogger.write(Level.INFO, "SERVER", userThread.getPlayer().getName() + " left the server!");
+		String exitString = userThread.getPlayer().getName() + " left the server!";
+		GuiTextHandler.writeToGui("SERVER", exitString);
 		
 		for (PlayerConnectionThread thread : connectionThreads) {
 			thread.getWriter().println(exitString);
 		}
+	}
+	
+	public static synchronized void disconnectUsers() {
+		
+		sendBroadcast("SERVER", "Shutting down... Sorry!");
+		System.exit(0);
 	}
 	
 	private static synchronized void compressIDs(int removedID) {

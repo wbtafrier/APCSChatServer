@@ -3,10 +3,9 @@ package com.compsci.core;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
 
 import com.compsci.display.ServerFrame;
-import com.compsci.util.SloverseLogger;
+import com.compsci.format.GuiTextHandler;
 
 public final class SloverseServer {
 
@@ -17,7 +16,7 @@ public final class SloverseServer {
 		
 		new ServerFrame();
 		
-		SloverseLogger.write(Level.INFO, "SERVER", "Welcome to the server control panel!");
+		GuiTextHandler.writeToGui("SERVER", "Welcome to the server control panel!");
 		
 		try (ServerSocket socket = new ServerSocket(portNumber);) {
 			
@@ -28,5 +27,14 @@ public final class SloverseServer {
 			System.err.println("Could not listen to port: " + portNumber);
 			System.exit(-1);
 		}
+	}
+	
+	public static boolean isRunning() {
+		return listening;
+	}
+	
+	public static void closeServer() {
+		ConnectionManager.disconnectUsers();
+		listening = false;
 	}
 }
