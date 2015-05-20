@@ -47,8 +47,19 @@ public class GuiTextHandler {
 	}
 	
 	public static void writeToGui(String label, String input) {
+		if (input == null) {
+			return;
+		}
+		
+		if (!CommandHub.isCommandFormat(input.trim())) {
+			ConnectionManager.sendBroadcast(label, input);
+			String oldText = FrameLayoutHandler.outPane.getText();
+			
+			String formatted = formatTextWithTime(label, input);
+			FrameLayoutHandler.outPane.setText(oldText + formatted + "\n");
+			return;
+		}
 		writeToGui(null, label, input);
-		ConnectionManager.sendBroadcast(label, input);
 	}
 	
 	public static boolean verifyMessage(String message) {

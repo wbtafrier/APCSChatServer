@@ -52,6 +52,7 @@ public class CommandHub {
 				ConnectionManager.sendErrorMessage("SYSTEM", suggestedCommands);
 			}
 			else {
+				ConnectionManager.sendErrorMessage(moderator, "SYSTEM", "'" + input + "'");
 				ConnectionManager.sendErrorMessage(moderator, "SYSTEM", suggestedCommands);
 			}
 			

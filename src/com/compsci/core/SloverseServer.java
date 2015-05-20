@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
 
-import com.compsci.command.CountdownThread;
 import com.compsci.display.ServerFrame;
 import com.compsci.format.GuiTextHandler;
 
@@ -20,7 +19,7 @@ public final class SloverseServer {
 		GuiTextHandler.writeToGui(null, "SERVER", "Welcome to the server control panel!");
 		
 		//Comment this out to stop the server from closing after 5 seconds.
-		new CountdownThread(5).start();
+//		new CountdownThread(5).start();
 		
 		try (ServerSocket socket = new ServerSocket(portNumber);) {
 			while (listening) {
