@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.compsci.command.CommandHub;
+import com.compsci.core.ConnectionManager;
+import com.compsci.core.PlayerConnectionThread;
 import com.compsci.display.FrameLayoutHandler;
 
 public class GuiTextHandler {
@@ -23,7 +25,7 @@ public class GuiTextHandler {
 		return timeStamp + formattedLabel + input;
 	}
 	
-	public static void writeToGui(String label, String input) {
+	public static void writeToGui(PlayerConnectionThread user, String label, String input) {
 		if (input == null) {
 			return;
 		}
@@ -34,7 +36,7 @@ public class GuiTextHandler {
 		}
 		
 		if (CommandHub.isCommandFormat(trimmed)) {
-			CommandHub.computeCommand(trimmed);
+			CommandHub.computeCommand(user, trimmed);
 			return;
 		}
 		
@@ -44,8 +46,13 @@ public class GuiTextHandler {
 		FrameLayoutHandler.outPane.setText(oldText + formatted + "\n");
 	}
 	
+	public static void writeToGui(String label, String input) {
+		writeToGui(null, label, input);
+		ConnectionManager.sendBroadcast(label, input);
+	}
+	
 	public static boolean verifyMessage(String message) {
-		if (message.contains("\n") || message.contains("\r") || message.isEmpty()) {
+		if (message.isEmpty()) {
 			return false;
 		}
 		return true;

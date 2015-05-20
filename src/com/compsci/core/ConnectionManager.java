@@ -32,19 +32,47 @@ public class ConnectionManager {
 	public static synchronized void sendMessage(PlayerConnectionThread thread, String message) {
 		
 		if (displayUserMessage)
-			GuiTextHandler.writeToGui(thread.getPlayer().getName(), message);
+			GuiTextHandler.writeToGui(thread, thread.getPlayer().getName(), message);
 		
 		for (PlayerConnectionThread t : connectionThreads) {
 			t.getWriter().println(GuiTextHandler.formatText(thread.getPlayer().getName(), message));
 		}
 	}
 	
-	public static synchronized void sendBroadcast(String label, String message) {
-		GuiTextHandler.writeToGui(label, message);
+	public static synchronized void sendBroadcast(PlayerConnectionThread thread, String label, String message) {
+		GuiTextHandler.writeToGui(thread, label, message);
 		
 		for (PlayerConnectionThread t : connectionThreads) {
 			t.getWriter().println(GuiTextHandler.formatText(label, message));
 		}
+	}
+	
+	public static synchronized void sendBroadcast(String label, String message) {
+		
+		for (PlayerConnectionThread t : connectionThreads) {
+			t.getWriter().println(GuiTextHandler.formatText(label, message));
+		}
+	}
+	
+	public static synchronized void sendPrivateMessage(PlayerConnectionThread sender, PlayerConnectionThread reciever, String message) {
+		
+		if (displayUserMessage)
+			GuiTextHandler.writeToGui(sender, sender.getPlayer().getName() + " --> " + reciever.getPlayer().getName(), message);
+		
+		sender.getWriter().println(GuiTextHandler.formatText(sender.getPlayer().getName() + " --> " + reciever.getPlayer().getName(), message));
+		reciever.getWriter().println(GuiTextHandler.formatText(sender.getPlayer().getName() + " --> " + reciever.getPlayer().getName(), message));
+	}
+	
+	public static synchronized void sendErrorMessage(String label, String message) {
+			GuiTextHandler.writeToGui(null, label, message);
+	}
+	
+	public static synchronized void sendErrorMessage(PlayerConnectionThread user, String label, String message) {
+		
+		if (displayUserMessage)
+			GuiTextHandler.writeToGui(user, label + " --> " + user.getPlayer().getName(), message);
+		
+		user.getWriter().println(GuiTextHandler.formatText(label, message));
 	}
 	
 	public static synchronized void addUser(PlayerConnectionThread userThread) throws IOException {
@@ -56,7 +84,7 @@ public class ConnectionManager {
 		userThread.setPlayer(newUser);
 		
 		String welcomeText = newUser.getName() + " joined the server!";
-		GuiTextHandler.writeToGui("SERVER", welcomeText);
+		GuiTextHandler.writeToGui(userThread, "SERVER", welcomeText);
 		
 		for (PlayerConnectionThread thread : connectionThreads) {
 			if (!thread.equals(userThread))
@@ -71,7 +99,7 @@ public class ConnectionManager {
 		compressIDs(userThread.getThreadID());
 		
 		String exitString = userThread.getPlayer().getName() + " left the server!";
-		GuiTextHandler.writeToGui("SERVER", exitString);
+		GuiTextHandler.writeToGui(userThread, "SERVER", exitString);
 		
 		for (PlayerConnectionThread thread : connectionThreads) {
 			thread.getWriter().println(exitString);
