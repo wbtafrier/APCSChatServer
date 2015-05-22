@@ -1,5 +1,11 @@
 package com.server.chat;
 
+import java.util.List;
+
+import com.server.connection.ConnectionManager;
+import com.server.connection.ConnectionThread;
+import com.server.user.EnumAuthorityLevel;
+
 
 public class ChatManager {
 
@@ -11,7 +17,13 @@ public class ChatManager {
 	 * @param input
 	 */
 	public static void filterMessage(Message m) {
-		//TODO: Filter the message coming in and see which method the message should go to.
+		
+		if (m.getType().equals(EnumMessageType.PUBLIC)) {
+			publicMessage(m);
+		}
+		else {
+			privateMessage(m);
+		}
 	}
 	
 	/**
@@ -21,10 +33,38 @@ public class ChatManager {
 	 */
 	public static void publicMessage(Message m) {
 		
+		ServerConsole.printMessage(m);
+		List<ConnectionThread> connectedThreads = ConnectionManager.getThreads();
+		for (ConnectionThread t : connectedThreads) {
+			t.getOutputStream().println(m);
+		}
 	}
 	
+	/**
+	 * Finds the sender and receiver of the message from everyone in the server and sends both of them the private message.
+	 * @param m
+	 */
 	public static void privateMessage(Message m) {
 		
+		boolean isServer = (m.getSender().getAuthority() == EnumAuthorityLevel.SERVER);
+		
+		List<ConnectionThread> connectedThreads = ConnectionManager.getThreads();
+		for (ConnectionThread t : connectedThreads) {
+			String currentUser = t.getPlayer().getName();
+
+			if (currentUser.equals(m.getReceiver().getName())) {
+				t.getOutputStream().println(m);
+			}
+			
+			if (isServer) {
+				ServerConsole.printMessage(m);
+				break;
+			}
+			
+			if (currentUser.equals(m.getSender().getName())) {
+				t.getOutputStream().println(m);
+			}
+		}
 	}
 	
 	public static void setMessagePrivacy(boolean b) {

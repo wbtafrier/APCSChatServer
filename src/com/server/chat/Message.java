@@ -9,16 +9,30 @@ public class Message {
 
 //	private static final int MAXIMUM_LENGTH = 300;
 	private String message;
-	private User user;
+	private EnumMessageType type;
+	private User sender, receiver;
 	
-	public Message(User u, String input) {
+	public Message(User s, String input) {
 		if (!checkInput(input)) return;
-		initMessage(u, input);
+		initMessage(s, input);
+		type = EnumMessageType.PUBLIC;
+		receiver = null;
 	}
 	
-	private void initMessage(User u, String input) {
-		user = u;
+	public Message(User s, User r, String input) {
+		if (!checkInput(input)) return;
+		initMessage(s, r, input);
+		type = EnumMessageType.PRIVATE;
+	}
+	
+	private void initMessage(User s, String input) {
+		sender = s;
 		message = input;
+	}
+	
+	private void initMessage(User s, User r, String input) {
+		receiver = r;
+		initMessage(s, input);
 	}
 	
 	private boolean checkInput(String input) {
@@ -29,11 +43,41 @@ public class Message {
 		return true;
 	}
 	
-	public User getUser() {
-		return user;
+	public String getFormattedMessage() {
+		String formattedMessage;
+		System.out.println(type);
+		
+		if (type.equals(EnumMessageType.PUBLIC)) {
+			formattedMessage = "[" + sender.getName() + "] " + message;
+		}
+		else {
+			formattedMessage = "[" + sender.getName() + " --> " + receiver.getName() + "] " + message;
+		}
+		return formattedMessage;
 	}
 	
+	public User getSender() {
+		return sender;
+	}
+	
+	public User getReceiver() {
+		return receiver;
+	}
+	
+	public EnumMessageType getType() {
+		return type;
+	}
+	
+	/**
+	 * Do not get the string for outputting! Only use when comparing the actual message. Use the toString method when printing out messages.
+	 * @return : the unformatted message.
+	 */
 	public String getMessage() {
 		return message;
+	}
+	
+	@Override
+	public String toString() {
+		return getFormattedMessage();
 	}
 }

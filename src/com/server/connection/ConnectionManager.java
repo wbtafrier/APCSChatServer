@@ -3,8 +3,9 @@ package com.server.connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.server.chat.ChatManager;
+import com.server.chat.InputManager;
 import com.server.chat.Message;
+import com.server.chat.command.EnumCommand;
 import com.server.core.SloverseServer;
 
 public class ConnectionManager {
@@ -32,7 +33,7 @@ public class ConnectionManager {
 	
 	public static synchronized void disconnectAllThreads() {
 		
-		ChatManager.publicMessage(new Message(SloverseServer.SYSTEM, "Disconnecting all users... Sorry!"));
+		InputManager.filterInput(new Message(SloverseServer.SYSTEM, EnumCommand.BROADCAST.getCommand() + " Disconnecting all users... Sorry!"));
 		for (int i = connectedThreads.size() - 1; i >= 0; i--) {
 			saveData(connectedThreads.get(i));
 			connectedThreads.remove(i);

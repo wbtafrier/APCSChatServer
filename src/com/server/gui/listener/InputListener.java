@@ -3,6 +3,9 @@ package com.server.gui.listener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.server.chat.InputManager;
+import com.server.chat.Message;
+import com.server.core.SloverseServer;
 import com.server.gui.FrameHandle;
 
 public class InputListener implements ActionListener {
@@ -11,8 +14,8 @@ public class InputListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(FrameHandle.inField)) {
 			
-//			String input = FrameHandle.inField.getText();
-//			GuiTextHandler.writeToGui("SERVER", input);
+			Message input = new Message(SloverseServer.SYSTEM, FrameHandle.inField.getText());
+			InputManager.filterInput(input);
 			FrameHandle.inField.setText("");
 		}
 	}

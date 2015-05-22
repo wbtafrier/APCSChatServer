@@ -9,7 +9,9 @@ public class InputManager {
 		if (m != null && m.getMessage() != null && (m.getMessage().length() > 1) && (m.getMessage().substring(0, 1).equals("/"))) {
 			CommandManager.filterCommand(m);
 		}
-		ChatManager.filterMessage(m);
+		else {
+			ChatManager.filterMessage(m);
+		}
 	}
 	
 	public static boolean isMessageAcceptable(String input) {

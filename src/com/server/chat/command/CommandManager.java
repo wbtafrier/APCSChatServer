@@ -42,5 +42,8 @@ public class CommandManager {
 	private static void computeCommand(Message m) {
 		System.out.println("Derp!");
 		//TODO: Check if the user has the correct authority, if not Log suspicious output and then send error message. else send to the method for that command.
+		
+		//if command is whisper, create new message with updated values.
+		//if broadcast, create new message with updated values.
 	}
 }
