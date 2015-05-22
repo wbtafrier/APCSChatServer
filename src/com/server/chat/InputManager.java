@@ -1,19 +1,15 @@
 package com.server.chat;
 
-import java.util.logging.Level;
-
-import com.server.user.User;
-import com.server.util.SloverseLogger;
+import com.server.chat.command.CommandManager;
 
 public class InputManager {
 
-	public static void filterInput(User user, String input) {
+	public static void filterInput(Message m) {
 		
-		if (!isMessageAcceptable(input)) {
-			SloverseLogger.logErrorMessage(Level.WARNING, "");
-			return;
+		if ((m.getMessage().length() > 1) && (m.getMessage().substring(0, 1).equals("/"))) {
+			CommandManager.filterCommand(m);
 		}
-		
+		ChatManager.filterMessage(m);
 	}
 	
 	public static boolean isMessageAcceptable(String input) {
