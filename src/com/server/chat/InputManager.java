@@ -6,7 +6,7 @@ public class InputManager {
 
 	public static void filterInput(Message m) {
 		
-		if ((m.getMessage().length() > 1) && (m.getMessage().substring(0, 1).equals("/"))) {
+		if (m != null && m.getMessage() != null && (m.getMessage().length() > 1) && (m.getMessage().substring(0, 1).equals("/"))) {
 			CommandManager.filterCommand(m);
 		}
 		ChatManager.filterMessage(m);
