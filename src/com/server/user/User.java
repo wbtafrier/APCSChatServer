@@ -8,6 +8,7 @@ public abstract class User {
 	
 	public User(EnumAuthorityLevel level, String userName) {
 		authority = level;
+		name = userName;
 	}
 	
 	public EnumAuthorityLevel getAuthority() {

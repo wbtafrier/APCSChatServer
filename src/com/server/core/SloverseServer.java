@@ -25,6 +25,7 @@ public final class SloverseServer {
 				new ConnectionThread(socket.accept()).start();
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			SloverseLogger.logErrorMessage(Level.SEVERE, "Could not listen to port: " + PORT_NUMBER);
 			System.exit(-1);
 		}

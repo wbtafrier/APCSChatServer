@@ -27,14 +27,6 @@ public class ConnectionThread extends Thread {
 	
 	private void init(Socket s) {
 		socket = s;
-		
-		try (PrintWriter out = new PrintWriter(socket.getOutputStream());
-				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
-				userOutput = out;
-				serverFeed = in;
-		} catch (IOException e) {
-			SloverseLogger.logErrorMessage(Level.SEVERE, "Error loading PrintWriter and BufferedReader. Stacktrace: \n" + e.getStackTrace());
-		}
 	}
 	
 	public Player getPlayer() {
@@ -53,16 +45,18 @@ public class ConnectionThread extends Thread {
 	public void run() {
 		player = Player.initPlayer();
 		ConnectionManager.connectThread(this);
-		Object incoming;
+		String incoming;
 		
-		try {
-			while (SloverseServer.isRunning() && (serverFeed != null) && ((incoming = serverFeed.readLine()) != null)) {
-				
-				if (incoming instanceof String) {
-					InputManager.filterInput(new Message(player, (String)incoming));
-				}
+		try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
+			
+				userOutput = out;
+				serverFeed = in;
+			while (SloverseServer.isRunning() && (incoming = serverFeed.readLine()) != null) {
+				InputManager.filterInput(new Message(player, (String)incoming));
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			SloverseLogger.logErrorMessage(Level.SEVERE, "Error - Stacktrace: \n\n" + e.getStackTrace());
 		}
 		ConnectionManager.disconnectThread(this);
@@ -74,9 +68,6 @@ public class ConnectionThread extends Thread {
 			return false;
 		
 		ConnectionThread t = (ConnectionThread) o;
-		
-		System.out.println("HELLO: " + this.getPlayer().getName());
-		System.out.println("OMG: " + t.getPlayer().getName());
 		
 		if (this.getPlayer().getName().equalsIgnoreCase(t.getPlayer().getName())) {
 			return  true;

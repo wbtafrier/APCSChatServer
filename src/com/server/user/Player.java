@@ -44,7 +44,6 @@ public class Player extends ClientUser {
 	}
 	
 	public static Player initPlayer() {
-		System.out.println("EHLLEL");
 		return new Player("Spongeboob", "patrick");
 		
 //		Tell client to show the login screen. (Where they can say their a new user, or enter a username and password.
