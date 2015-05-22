@@ -5,7 +5,7 @@ import java.awt.event.WindowEvent;
 
 import com.server.gui.FrameHandle;
 
-public class GUIListener extends WindowAdapter {
+public class GuiListener extends WindowAdapter {
 
 	@Override
 	public void windowOpened(WindowEvent we) {

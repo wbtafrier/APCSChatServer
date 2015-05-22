@@ -19,7 +19,7 @@ import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.StyledDocument;
 
-import com.server.gui.listener.GUIListener;
+import com.server.gui.listener.GuiListener;
 import com.server.gui.listener.InputListener;
 import com.server.gui.listener.MenuListener;
 import com.server.gui.listener.PaneFocusListener;
@@ -42,6 +42,7 @@ public class FrameHandle {
 	public static StyledDocument doc = outPane.getStyledDocument();
 	public static JScrollPane scrollPane = new JScrollPane(outPane);
 	public static JTextField inField = new JTextField();
+	public static PropertiesDialog propertiesDialog;
 	
 	private static MenuListener menuListener = new MenuListener(); 
 	
@@ -49,6 +50,8 @@ public class FrameHandle {
 		if (frame != null) {		
 			serverFrame = frame;
 			
+			propertiesItem.addActionListener(menuListener);
+			propertiesItem.setToolTipText("Modify the properties of the server console window.");
 			fileMenu.add(propertiesItem);
 			exitItem.addActionListener(menuListener);
 			exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, KeyEvent.ALT_MASK));
@@ -59,7 +62,7 @@ public class FrameHandle {
 			serverFrame.setJMenuBar(menuBar);
 			addGridBag();
 			serverFrame.add(mainPanel);
-			serverFrame.addWindowListener(new GUIListener());
+			serverFrame.addWindowListener(new GuiListener());
 			
 			outPane.addFocusListener(new PaneFocusListener());
 			outPane.setDragEnabled(true);
