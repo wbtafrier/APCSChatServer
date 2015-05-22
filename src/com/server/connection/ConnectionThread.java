@@ -1,12 +1,14 @@
 package com.server.connection;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 
 import com.server.chat.InputManager;
+import com.server.chat.Message;
 import com.server.core.SloverseServer;
 import com.server.user.Player;
 import com.server.util.SloverseLogger;
@@ -15,8 +17,8 @@ public class ConnectionThread extends Thread {
 	
 	private Player player;
 	private Socket socket;
-	private ObjectOutputStream userOutput;
-	private ObjectInputStream serverFeed;
+	private PrintWriter userOutput;
+	private BufferedReader serverFeed;
 	
 	public ConnectionThread(Socket s) {
 		super();
@@ -26,12 +28,12 @@ public class ConnectionThread extends Thread {
 	private void init(Socket s) {
 		socket = s;
 		
-		try (ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());) {
+		try (PrintWriter out = new PrintWriter(socket.getOutputStream());
+				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
 				userOutput = out;
 				serverFeed = in;
 		} catch (IOException e) {
-			SloverseLogger.logErrorMessage(Level.SEVERE, "Error loading when PrintWriter and BufferedReader. Stacktrace: \n" + e.getStackTrace());
+			SloverseLogger.logErrorMessage(Level.SEVERE, "Error loading PrintWriter and BufferedReader. Stacktrace: \n" + e.getStackTrace());
 		}
 	}
 	
@@ -39,30 +41,29 @@ public class ConnectionThread extends Thread {
 		return player;
 	}
 	
-	public ObjectOutputStream getOutputStream() {
+	public PrintWriter getOutputStream() {
 		return userOutput;
 	}
 	
-	public ObjectInputStream getInputStream() {
+	public BufferedReader getInputStream() {
 		return serverFeed;
 	}
 	
 	@Override
 	public void run() {
-		player = new Player("Derp", "Spongeboob");
-//		player = Player.initPlayer();
+		player = Player.initPlayer();
 		ConnectionManager.connectThread(this);
 		Object incoming;
 		
 		try {
-			while (SloverseServer.isRunning() && ((incoming = serverFeed.readObject()) != null)) {
+			while (SloverseServer.isRunning() && (serverFeed != null) && ((incoming = serverFeed.readLine()) != null)) {
 				
 				if (incoming instanceof String) {
-					InputManager.filterInput(player, (String)incoming);
+					InputManager.filterInput(new Message(player, (String)incoming));
 				}
 			}
-		} catch (ClassNotFoundException | IOException e) {
-			SloverseLogger.logErrorMessage(Level.SEVERE, "Error - Stacktrace: \n" + e.getStackTrace());
+		} catch (IOException e) {
+			SloverseLogger.logErrorMessage(Level.SEVERE, "Error - Stacktrace: \n\n" + e.getStackTrace());
 		}
 		ConnectionManager.disconnectThread(this);
 	}
@@ -73,6 +74,9 @@ public class ConnectionThread extends Thread {
 			return false;
 		
 		ConnectionThread t = (ConnectionThread) o;
+		
+		System.out.println("HELLO: " + this.getPlayer().getName());
+		System.out.println("OMG: " + t.getPlayer().getName());
 		
 		if (this.getPlayer().getName().equalsIgnoreCase(t.getPlayer().getName())) {
 			return  true;

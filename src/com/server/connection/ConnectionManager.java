@@ -3,6 +3,10 @@ package com.server.connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.server.chat.ChatManager;
+import com.server.chat.Message;
+import com.server.core.SloverseServer;
+
 public class ConnectionManager {
 
 	private static List<ConnectionThread> connectedThreads = new ArrayList<>();
@@ -19,9 +23,23 @@ public class ConnectionManager {
 		
 		for (int i = 0; i < connectedThreads.size(); i++) {
 			if (connectedThreads.get(i).equals(thread)) {
+				saveData(thread);
 				connectedThreads.remove(i);
 				break;
 			}
 		}
+	}
+	
+	public static synchronized void disconnectAllThreads() {
+		
+		ChatManager.publicMessage(new Message(SloverseServer.SYSTEM, "Disconnecting all users... Sorry!"));
+		for (int i = connectedThreads.size() - 1; i >= 0; i--) {
+			saveData(connectedThreads.get(i));
+			connectedThreads.remove(i);
+		}
+	}
+	
+	public static synchronized void saveData(ConnectionThread thread) {
+		//Save everything about the thread to their file.
 	}
 }

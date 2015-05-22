@@ -13,7 +13,16 @@ public class SloverseLogger {
 	
 	public static void logErrorMessage(Level l, String message) {
 		sloverseLogger.log(l, message);
-		System.err.println("SLOVERSE LOGGER: " + message);
+//		System.err.println("SLOVERSE LOGGER: " + message);
+		//Send message to file system to be logged.
+		
+		
+		//Send to Server Control Panel to be output
+	}
+	
+	public static void logSuspiciousMessage(Level l, String message) {
+		sloverseLogger.log(l, "Suspicious activity: " + message);
+		System.err.println("SLOVERSE LOGGER: Suspicious activity: " + message);
 		//Send message to file system to be logged.
 		
 		

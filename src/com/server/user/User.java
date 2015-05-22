@@ -2,10 +2,11 @@ package com.server.user;
 
 
 public abstract class User {
-
+	
+	private String name;
 	private EnumAuthorityLevel authority;
 	
-	public User(EnumAuthorityLevel level) {
+	public User(EnumAuthorityLevel level, String userName) {
 		authority = level;
 	}
 	
@@ -15,5 +16,9 @@ public abstract class User {
 	
 	public void setAuthority(EnumAuthorityLevel level) {
 		authority = level;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }

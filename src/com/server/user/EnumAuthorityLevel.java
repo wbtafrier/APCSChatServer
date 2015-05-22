@@ -2,7 +2,7 @@ package com.server.user;
 
 public enum EnumAuthorityLevel {
 
-	PLAYER(0), MODERATOR(1), SERVER(2);
+	PLAYER(0), MODERATOR(1), ADMINISTRATOR(2), SERVER(3);
 	
 	private final int AUTHORITY_LEVEL;
 	
