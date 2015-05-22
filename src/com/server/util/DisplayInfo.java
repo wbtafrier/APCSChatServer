@@ -1,10 +1,13 @@
-package com.compsci.display;
+package com.server.util;
 
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
+/**
+ * Provides basic information on the users computer and monitor.
+ */
 public abstract class DisplayInfo {
 
 	private static GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

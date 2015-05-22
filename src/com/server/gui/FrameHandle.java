@@ -1,4 +1,4 @@
-package com.compsci.display;
+package com.server.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,9 +19,16 @@ import javax.swing.KeyStroke;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.StyledDocument;
 
-import com.compsci.command.CommandAction;
+import com.server.gui.listener.GUIListener;
+import com.server.gui.listener.InputListener;
+import com.server.gui.listener.MenuListener;
+import com.server.gui.listener.PaneFocusListener;
+import com.server.util.DisplayInfo;
 
-public class FrameLayoutHandler {
+/**
+ * Provides setup information for the SloverseFrame and holds a handle to the frame.
+ */
+public class FrameHandle {
 	
 	private static ServerFrame serverFrame;
 	
@@ -52,7 +59,7 @@ public class FrameLayoutHandler {
 			serverFrame.setJMenuBar(menuBar);
 			addGridBag();
 			serverFrame.add(mainPanel);
-			serverFrame.addWindowListener(new WindowListener());
+			serverFrame.addWindowListener(new GUIListener());
 			
 			outPane.addFocusListener(new PaneFocusListener());
 			outPane.setDragEnabled(true);
@@ -68,7 +75,7 @@ public class FrameLayoutHandler {
 			
 			outPane.setFont(new Font(fontName, Font.PLAIN, 12));
 			
-			inField.addActionListener(new CommandAction());
+			inField.addActionListener(new InputListener());
 		}
 	}
 	
@@ -97,7 +104,6 @@ public class FrameLayoutHandler {
 		
 		inField.setBorder(BorderFactory.createCompoundBorder(inField.getBorder(), BorderFactory.createEmptyBorder(5, 2, 5, 2)));
 		mainPanel.add(inField, gbc);
-		
 	}
 	
 	public static ServerFrame getFrame() {

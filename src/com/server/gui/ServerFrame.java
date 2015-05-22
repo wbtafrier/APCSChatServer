@@ -1,4 +1,4 @@
-package com.compsci.display;
+package com.server.gui;
 
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
@@ -6,18 +6,21 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import com.compsci.core.SloverseServer;
+import com.server.core.SloverseServer;
+import com.server.util.DisplayInfo;
 
-
+/**
+ * The JFrame for the Server control panel.
+ */
 public class ServerFrame extends JFrame {
 
 	private static final long serialVersionUID = 1707966321497413110L;
 	private static final Dimension MINIMUM_SIZE = new Dimension((int)(DisplayInfo.getScreenSize().getWidth() / 4), (int)(DisplayInfo.getScreenSize().getHeight() / 2));
 	private static final Dimension MAXIMUM_SIZE = new Dimension(DisplayInfo.getScreenSize().width, DisplayInfo.getScreenSize().height);
 
-	public ServerFrame() {
-		super("Sloverse Server");
-		FrameLayoutHandler.setupFrame(this);
+	public ServerFrame(String name) {
+		super(name);
+		FrameHandle.setupFrame(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.addWindowListeners();
 		
@@ -35,7 +38,7 @@ public class ServerFrame extends JFrame {
 			
 			@Override
 			public void windowClosing(WindowEvent we) {
-				SloverseServer.closeServer();
+				SloverseServer.shutdownServer();
 			}
 		});
 	}
