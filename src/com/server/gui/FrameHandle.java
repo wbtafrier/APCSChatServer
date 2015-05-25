@@ -44,7 +44,8 @@ public class FrameHandle {
 	private static JTextField inField = new JTextField();
 	private static PropertiesDialog propertiesDialog;
 	
-	private static MenuListener menuListener = new MenuListener(); 
+	private static MenuListener menuListener = new MenuListener();
+	private static InputListener inputListener = new InputListener();
 	
 	public static void setupFrame(ServerFrame frame) {
 		if (frame != null) {		
@@ -78,7 +79,8 @@ public class FrameHandle {
 			
 			outPane.setFont(new Font(fontName, Font.PLAIN, 12));
 			
-			inField.addActionListener(new InputListener());
+			inField.addActionListener(inputListener);
+			inField.addKeyListener(inputListener);
 		}
 	}
 	
