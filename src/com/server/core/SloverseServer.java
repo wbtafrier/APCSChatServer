@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 
+import com.server.chat.Message;
+import com.server.chat.ServerConsole;
 import com.server.connection.ConnectionManager;
 import com.server.connection.ConnectionThread;
 import com.server.gui.ServerFrame;
@@ -19,6 +21,7 @@ public final class SloverseServer {
 	
 	public static void main(String[] args) {
 		new ServerFrame("Sloverse Server");
+		ServerConsole.printMessage(new Message(SYSTEM, "Welcome to the Sloverse Server console!"));
 		
 		try (ServerSocket socket = new ServerSocket(PORT_NUMBER);) {
 			while (isListening) {

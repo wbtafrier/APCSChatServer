@@ -15,7 +15,7 @@ public class InputManager {
 	}
 	
 	public static boolean isMessageAcceptable(String input) {
-		if ((input != null) && (!input.isEmpty()) && (!input.contains("\t")))
+		if ((input != null) && (!input.isEmpty())  && (!input.contains("\t")))
 			return true;
 		return false;
 	}
