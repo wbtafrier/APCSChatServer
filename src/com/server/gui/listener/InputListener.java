@@ -12,11 +12,11 @@ public class InputListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(FrameHandle.inField)) {
+		if (e.getSource().equals(FrameHandle.getInputField())) {
 			
-			Message input = new Message(SloverseServer.SYSTEM, FrameHandle.inField.getText());
+			Message input = new Message(SloverseServer.SYSTEM, FrameHandle.getInputField().getText());
 			InputManager.filterInput(input);
-			FrameHandle.inField.setText("");
+			FrameHandle.getInputField().setText("");
 		}
 	}
 	

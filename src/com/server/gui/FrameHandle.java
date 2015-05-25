@@ -32,17 +32,17 @@ public class FrameHandle {
 	
 	private static ServerFrame serverFrame;
 	
-	static JPanel mainPanel = new JPanel();
+	private static JPanel mainPanel = new JPanel();
 	
-	public static JMenuBar menuBar = new JMenuBar();
-	public static JMenu fileMenu = new JMenu("File");
-	public static JMenuItem propertiesItem = new JMenuItem("Properties...", KeyEvent.VK_P);
-	public static JMenuItem exitItem = new JMenuItem("Exit");
-	public static JTextPane outPane = new JTextPane();
-	public static StyledDocument doc = outPane.getStyledDocument();
-	public static JScrollPane scrollPane = new JScrollPane(outPane);
-	public static JTextField inField = new JTextField();
-	public static PropertiesDialog propertiesDialog;
+	private static JMenuBar menuBar = new JMenuBar();
+	private static JMenu fileMenu = new JMenu("File");
+	private static JMenuItem propertiesItem = new JMenuItem("Properties...", KeyEvent.VK_P);
+	private static JMenuItem exitItem = new JMenuItem("Exit");
+	private static JTextPane outPane = new JTextPane();
+	private static StyledDocument doc = outPane.getStyledDocument();
+	private static JScrollPane scrollPane = new JScrollPane(outPane);
+	private static JTextField inField = new JTextField();
+	private static PropertiesDialog propertiesDialog;
 	
 	private static MenuListener menuListener = new MenuListener(); 
 	
@@ -111,5 +111,49 @@ public class FrameHandle {
 	
 	public static ServerFrame getFrame() {
 		return serverFrame;
+	}
+	
+	public static JPanel getMainPanel() {
+		return mainPanel;
+	}
+	
+	public static JMenuBar getMenuBar() {
+		return menuBar;
+	}
+	
+	public static JMenu getFileMenu() {
+		return fileMenu;
+	}
+	
+	public static JMenuItem getPropertiesItem() {
+		return propertiesItem;
+	}
+	
+	public static JMenuItem getExitItem() {
+		return exitItem;
+	}
+	
+	public static JTextPane getOutputPane() {
+		return outPane;
+	}
+	
+	public static StyledDocument getDocument() {
+		return doc;
+	}
+	
+	public static JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+	
+	public static JTextField getInputField() {
+		return inField;
+	}
+	
+	public static PropertiesDialog getPropertiesDialog() {
+		return propertiesDialog;
+	}
+	
+	public static void setPropertiesDialog(PropertiesDialog prop) {
+		propertiesDialog = prop;
 	}
 }

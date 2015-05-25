@@ -8,9 +8,9 @@ import com.server.gui.FrameHandle;
 public class ServerConsole {
 
 	public static void printMessage(Message m) {
-		String oldText = FrameHandle.outPane.getText();
+		String oldText = FrameHandle.getOutputPane().getText();
 		
-		FrameHandle.outPane.setText(oldText + addTimeStamp(m.getFormattedMessage()) + "\n");
+		FrameHandle.getOutputPane().setText(oldText + addTimeStamp(m.getFormattedMessage()) + "\n");
 	}
 	
 	private static String addTimeStamp(String message) {

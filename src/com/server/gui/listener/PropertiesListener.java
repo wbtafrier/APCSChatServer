@@ -15,24 +15,13 @@ public class PropertiesListener extends WindowAdapter implements ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (FrameHandle.propertiesDialog != null)
+		if (FrameHandle.getPropertiesDialog() != null)
 		{
-			if (e.getSource().equals(FrameHandle.propertiesDialog.colorDropdown)) {
-				String selectedItem = (String) FrameHandle.propertiesDialog.colorDropdown.getSelectedItem();
-				Color selectedColor = new Color(200, 200, 200);
-				if (selectedItem.equalsIgnoreCase("red")) {
-					selectedColor = Color.RED;
-				}
-				else if (selectedItem.equalsIgnoreCase("purple")) {
-					selectedColor = Color.MAGENTA;
-				}
-				GuiOperations.changeColor(selectedColor);
-			}
-			else if (e.getSource().equals(FrameHandle.propertiesDialog.selectColor)) {
-				Color c = JColorChooser.showDialog(FrameHandle.propertiesDialog, "Sloverse Server - Select Console Color", Color.red);
+			if (e.getSource().equals(FrameHandle.getPropertiesDialog().selectColor)) {
+				Color c = JColorChooser.showDialog(FrameHandle.getPropertiesDialog(), "Sloverse Server - Select Console Color", FrameHandle.getOutputPane().getBackground());
 				GuiOperations.changeColor(c);
 			}
-			else if (e.getSource().equals(FrameHandle.propertiesDialog.doneButton)) {
+			else if (e.getSource().equals(FrameHandle.getPropertiesDialog().doneButton)) {
 				GuiOperations.closePropertiesDialog();
 			}
 		}
