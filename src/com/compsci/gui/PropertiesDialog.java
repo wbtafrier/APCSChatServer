@@ -1,14 +1,12 @@
 package com.compsci.gui;
 
 import java.awt.GridLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import com.compsci.gui.listener.PropertiesListener;
 
 public class PropertiesDialog extends JDialog {
