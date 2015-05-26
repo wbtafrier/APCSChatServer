@@ -11,10 +11,10 @@ public class MenuListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(FrameHandle.exitItem)) {
+		if (e.getSource().equals(FrameHandle.getExitItem())) {
 			SloverseServer.shutdownServer();
 		}
-		else if (e.getSource().equals(FrameHandle.propertiesItem)) {
+		else if (e.getSource().equals(FrameHandle.getPropertiesItem())) {
 			GuiOperations.openPropertiesDialog();
 		}
 	}

@@ -12,15 +12,15 @@ public class PaneFocusListener implements FocusListener {
 
 	@Override
 	public void focusGained(FocusEvent e) {
-		if (e.getSource().equals(FrameHandle.outPane)) {
-			FrameHandle.outPane.setEditable(false);
+		if (e.getSource().equals(FrameHandle.getOutputPane())) {
+			FrameHandle.getOutputPane().setEditable(false);
 		}
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		if (e.getSource().equals(FrameHandle.outPane)) {
-			FrameHandle.outPane.setEditable(true);
+		if (e.getSource().equals(FrameHandle.getOutputPane())) {
+			FrameHandle.getOutputPane().setEditable(true);
 		}
 	}
 }

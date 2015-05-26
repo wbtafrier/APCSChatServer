@@ -2,11 +2,12 @@ package com.compsci.gui;
 
 import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import com.compsci.gui.listener.PropertiesListener;
 
@@ -15,11 +16,9 @@ public class PropertiesDialog extends JDialog {
 	private static final long serialVersionUID = 4223266559039204055L;
 
 	public JPanel propertiesPanel = new JPanel();
-	public JLabel colorLabel = new JLabel("Console Color:");
-	private String[] availableColors = new String[] {
-		"Gray", "Red", "Purple"
-	};
-	public JComboBox<String> colorDropdown = new JComboBox<String>(availableColors);
+	public JPanel colorPanel = new JPanel();
+	public JPanel donePanel = new JPanel();
+	public JLabel colorLabel = new JLabel("Console Color: ");
 	public JButton selectColor = new JButton("Select Color...");
 	public JButton doneButton = new JButton("Done");
 	
@@ -27,15 +26,18 @@ public class PropertiesDialog extends JDialog {
 	
 	public PropertiesDialog() {
 		super(FrameHandle.getFrame(), "Sloverse Server - Properties");
-		propertiesPanel.setLayout(new GridLayout(3, 0));
-		propertiesPanel.add(colorLabel);
-		colorDropdown.addActionListener(propertiesListener);
-//		propertiesPanel.add(colorDropdown);
+		propertiesPanel.setLayout(new GridLayout(2, 0));
+		colorPanel.setLayout(new BoxLayout(colorPanel, BoxLayout.X_AXIS));
+		colorPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		colorLabel.setBorder(new EmptyBorder(0, 0, 0, 5));
+		colorPanel.add(colorLabel);
 		selectColor.addActionListener(propertiesListener);
 		selectColor.setToolTipText("Select the background color of your server console window.");
-		propertiesPanel.add(selectColor);
+		colorPanel.add(selectColor);
 		doneButton.addActionListener(propertiesListener);
-		propertiesPanel.add(doneButton);		
+		donePanel.add(doneButton);
+		propertiesPanel.add(colorPanel);
+		propertiesPanel.add(donePanel);
 		this.add(propertiesPanel);
 		this.pack();
 		this.setResizable(false);

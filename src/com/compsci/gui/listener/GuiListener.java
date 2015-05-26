@@ -9,7 +9,7 @@ public class GuiListener extends WindowAdapter {
 
 	@Override
 	public void windowOpened(WindowEvent we) {
-		FrameHandle.inField.requestFocusInWindow();
+		FrameHandle.getInputField().requestFocusInWindow();
 		FrameHandle.getFrame().removeWindowListener(this);
 	}
 }
