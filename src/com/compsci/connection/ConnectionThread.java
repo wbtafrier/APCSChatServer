@@ -3,6 +3,7 @@ package com.compsci.connection;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Level;
@@ -49,6 +50,11 @@ public class ConnectionThread extends Thread {
 		Object incoming;
 		
 		try {
+			if (socket.getInetAddress().equals(InetAddress.getByName(SloverseServer.getPublicIP()))) {
+				socket.close();
+				return;
+			}
+			
 			outStream = new ObjectOutputStream(socket.getOutputStream());
 			inStream = new ObjectInputStream(socket.getInputStream());
 			
@@ -84,7 +90,9 @@ public class ConnectionThread extends Thread {
 		
 		ConnectionThread t = (ConnectionThread) o;
 		
-		if (this.getPlayer().getName().equalsIgnoreCase(t.getPlayer().getName())) {
+		System.out.println(this.getPlayer().getUserID() + " " + t.getPlayer().getUserID());
+		
+		if (this.getPlayer().getUserID() == t.getPlayer().getUserID()) {
 			return  true;
 		}
 		return false;
