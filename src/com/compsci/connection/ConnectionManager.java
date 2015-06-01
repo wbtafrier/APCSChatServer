@@ -17,8 +17,9 @@ public class ConnectionManager {
 		return connectedThreads;
 	}
 	
-	public static synchronized void connectThread(ConnectionThread thread) {
+	public static synchronized void connectThread(ConnectionThread thread) throws IOException {
 		connectedThreads.add(thread);
+		InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer().getName() + " has joined the server!"));
 	}
 	
 	public static synchronized void disconnectThread(ConnectionThread thread) {

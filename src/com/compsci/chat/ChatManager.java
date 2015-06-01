@@ -39,7 +39,11 @@ public class ChatManager {
 		ServerConsole.printMessage(m);
 		List<ConnectionThread> connectedThreads = ConnectionManager.getThreads();
 		for (ConnectionThread t : connectedThreads) {
-			t.getOutputStream().writeObject(m);
+			t
+			.getOutputStream()
+			.writeObject(
+					m
+					);
 		}
 	}
 	

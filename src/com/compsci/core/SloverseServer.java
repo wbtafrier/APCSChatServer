@@ -67,9 +67,8 @@ public final class SloverseServer {
 		String ip = "localhost";
 		try {
 			URL whatismyip = new URL("http://checkip.amazonaws.com");
-			ServerConsole.printMessage(new Message(SERVER, "Trying to establish connection."));
+			ServerConsole.printMessage(new Message(SERVER, "Trying to establish connection..."));
 			BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
-			
 			ip = in.readLine();
 			return ip;
 		} catch (IOException e) {

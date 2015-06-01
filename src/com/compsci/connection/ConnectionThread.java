@@ -45,9 +45,6 @@ public class ConnectionThread extends Thread {
 	
 	@Override
 	public void run() {
-		player = Player.initPlayer();
-		ConnectionManager.connectThread(this);
-		Object incoming;
 		
 		try {
 			if (socket.getInetAddress().equals(InetAddress.getByName(SloverseServer.getPublicIP()))) {
@@ -57,11 +54,23 @@ public class ConnectionThread extends Thread {
 			
 			outStream = new ObjectOutputStream(socket.getOutputStream());
 			inStream = new ObjectInputStream(socket.getInputStream());
+			Object incoming = null;
+			
+			while (SloverseServer.isRunning() && !socket.isClosed()) {
+				incoming = inStream.readObject();
+				
+				if (incoming != null && incoming instanceof Player) {
+					player = (Player)incoming;
+					break;
+				}
+			}
+			ConnectionManager.connectThread(this);
 			
 			while (SloverseServer.isRunning() && !socket.isClosed()) {
 				incoming = inStream.readObject();
 				
 				if (incoming != null) {
+					
 					if (incoming instanceof Message) {
 						InputManager.filterInput((Message) incoming);
 					}
