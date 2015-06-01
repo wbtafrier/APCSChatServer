@@ -8,6 +8,7 @@ import com.compsci.chat.InputManager;
 import com.compsci.chat.Message;
 import com.compsci.chat.command.EnumCommand;
 import com.compsci.core.SloverseServer;
+import com.compsci.user.User;
 
 public class ConnectionManager {
 
@@ -27,6 +28,17 @@ public class ConnectionManager {
 		for (int i = 0; i < connectedThreads.size(); i++) {
 			if (connectedThreads.get(i).equals(thread)) {
 				saveData(thread);
+				connectedThreads.remove(i);
+				break;
+			}
+		}
+	}
+	
+	public static synchronized void disconnectThread(User user) {
+		
+		for (int i = 0; i < connectedThreads.size(); i++) {
+			if (connectedThreads.get(i).getPlayer().equals(user)) {
+				saveData(connectedThreads.get(i));
 				connectedThreads.remove(i);
 				break;
 			}

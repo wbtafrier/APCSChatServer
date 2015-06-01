@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.compsci.chat.ChatManager;
 import com.compsci.chat.Message;
+import com.compsci.connection.ConnectionManager;
 
 public class CommandManager {
 
@@ -42,6 +43,10 @@ public class CommandManager {
 	
 	
 	private static void computeCommand(Message m) {
+		
+		if (m.getMessage().equals("/disconnect")) {
+			ConnectionManager.disconnectThread(m.getSender());
+		}
 		System.out.println("Derp!");
 		//TODO: Check if the user has the correct authority, if not Log suspicious output and then send error message. else send to the method for that command.
 		
