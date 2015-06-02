@@ -21,6 +21,9 @@ public class ConnectionManager {
 	public static synchronized void connectThread(ConnectionThread thread) throws IOException {
 		connectedThreads.add(thread);
 		InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer().getName() + " has joined the server!"));
+		
+		if ((connectedThreads.size() - 1) == 1) InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer(), "There are is 1 other user online."));
+		else InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer(), "There are " + (connectedThreads.size() - 1) + " other users online."));
 	}
 	
 	public static synchronized void disconnectThread(ConnectionThread thread) {
@@ -32,6 +35,12 @@ public class ConnectionManager {
 				break;
 			}
 		}
+		
+		try {
+			InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer().getName() + " left the server."));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static synchronized void disconnectThread(User user) {
@@ -42,6 +51,12 @@ public class ConnectionManager {
 				connectedThreads.remove(i);
 				break;
 			}
+		}
+		
+		try {
+			InputManager.filterInput(new Message(SloverseServer.SERVER, user.getName() + " left the server."));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

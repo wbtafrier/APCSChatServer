@@ -1,6 +1,5 @@
 package com.compsci.gui;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -70,7 +69,7 @@ public class FrameHandle {
 			outPane.setEditable(false);
 			DefaultCaret caret = (DefaultCaret)outPane.getCaret();
 			caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-			outPane.setBackground(new Color(200, 200, 200));
+			GuiOperations.randomizeColor();
 			
 			String fontName = "Consolas";
 			if (!DisplayInfo.isFontInstalled(fontName)) {

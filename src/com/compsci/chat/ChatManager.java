@@ -39,11 +39,7 @@ public class ChatManager {
 		ServerConsole.printMessage(m);
 		List<ConnectionThread> connectedThreads = ConnectionManager.getThreads();
 		for (ConnectionThread t : connectedThreads) {
-			t
-			.getOutputStream()
-			.writeObject(
-					m
-					);
+			t.getOutputStream().writeObject(m);
 		}
 	}
 	
@@ -60,17 +56,13 @@ public class ChatManager {
 		for (ConnectionThread t : connectedThreads) {
 			String currentUser = t.getPlayer().getName();
 
-			if (currentUser.equals(m.getReceiver().getName())) {
+			if (currentUser.equals(m.getReceiver().getName()) || currentUser.equals(m.getSender().getName())) {
 				t.getOutputStream().writeObject(m);
-			}
-			
-			if (isServer) {
-				ServerConsole.printMessage(m);
-				break;
-			}
-			
-			if (currentUser.equals(m.getSender().getName())) {
-				t.getOutputStream().writeObject(m);
+				
+				if (isServer) {
+					ServerConsole.printMessage(m);
+					break;
+				}
 			}
 		}
 	}
