@@ -93,5 +93,6 @@ public final class SloverseServer {
 			e.printStackTrace();
 		}
 		setListening(false);
+		System.exit(0);
 	}
 }
