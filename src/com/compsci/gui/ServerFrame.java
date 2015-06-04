@@ -13,7 +13,7 @@ import com.compsci.util.DisplayInfo;
 public class ServerFrame extends JFrame {
 
 	private static final long serialVersionUID = 1707966321497413110L;
-	private static final Dimension MINIMUM_SIZE = new Dimension((int)(DisplayInfo.getScreenSize().getWidth() / 4), (int)(DisplayInfo.getScreenSize().getHeight() / 2));
+	private static final Dimension MINIMUM_SIZE = new Dimension((int)(DisplayInfo.getScreenSize().getWidth() / 3), (int)(DisplayInfo.getScreenSize().getHeight() / 1.5));
 	private static final Dimension MAXIMUM_SIZE = new Dimension(DisplayInfo.getScreenSize().width, DisplayInfo.getScreenSize().height);
 
 	public ServerFrame(String name) {

@@ -14,8 +14,8 @@ public class MenuListener implements ActionListener {
 		if (e.getSource().equals(FrameHandle.getExitItem())) {
 			SloverseServer.shutdownServer();
 		}
-		else if (e.getSource().equals(FrameHandle.getPropertiesItem())) {
-			GuiOperations.openPropertiesDialog();
+		else if (e.getSource().equals(FrameHandle.getCustomizeItem())) {
+			GuiOperations.openCustomizeDialog();
 		}
 	}
 }

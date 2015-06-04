@@ -17,19 +17,19 @@ public class GuiOperations {
 		FrameHandle.getOutputPane().setBackground(new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)));
 	}
 	
-	public static void openPropertiesDialog() {
-		if (FrameHandle.getPropertiesDialog() == null) {
-			FrameHandle.setPropertiesDialog(new PropertiesDialog());
+	public static void openCustomizeDialog() {
+		if (FrameHandle.getCustomizeDialog() == null) {
+			FrameHandle.setCustomizeDialog(new CustomizeDialog());
 		}
 		else {
-			FrameHandle.getPropertiesDialog().setVisible(true);
+			FrameHandle.getCustomizeDialog().setVisible(true);
 		}
 	}
 	
-	public static void closePropertiesDialog() {
-		if (FrameHandle.getPropertiesDialog() != null) {
-			FrameHandle.getPropertiesDialog().setVisible(false);
-			FrameHandle.getPropertiesDialog().dispose();
+	public static void closeCustomizeDialog() {
+		if (FrameHandle.getCustomizeDialog() != null) {
+			FrameHandle.getCustomizeDialog().setVisible(false);
+			FrameHandle.getCustomizeDialog().dispose();
 		}
 	}
 }

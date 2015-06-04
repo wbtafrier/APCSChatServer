@@ -23,7 +23,7 @@ public final class SloverseServer {
 
 	public static final User SERVER = new ServerUser();
 	private static boolean isListening = true;
-	private static final int PORT_NUMBER = 609;
+	private static final int PORT_NUMBER = 309;
 	private static final int TIME_OUT = 5000;
 	private static String PUBLIC_IP;
 	
