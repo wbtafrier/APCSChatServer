@@ -74,6 +74,7 @@ public class ConnectionThread extends Thread {
 					else {
 						ServerConsole.printMessage(new Message(SloverseServer.SERVER, "Someone tried logging in with the same username: " + incomingPlayer.getName() + ". Rejected."));
 						ConnectionManager.sendData(this, new Boolean(false));
+						return;
 					}
 				}
 			}

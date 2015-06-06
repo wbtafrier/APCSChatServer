@@ -72,6 +72,10 @@ public class ConnectionManager {
 	
 	public synchronized static boolean isUniqueUsername(User user) throws IOException {
 		
+		if (user.getName().equals("SERVER")) {
+			return false;
+		}
+		
 		for (int i = 0; i < connectedThreads.size(); i++) {
 			if (user.getName().equals(connectedThreads.get(i).getPlayer().getName())) {
 				return false;
