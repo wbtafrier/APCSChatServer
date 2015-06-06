@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.compsci.chat.InputManager;
 import com.compsci.chat.Message;
+import com.compsci.chat.ServerConsole;
 import com.compsci.chat.command.EnumCommand;
 import com.compsci.core.SloverseServer;
 import com.compsci.user.User;
@@ -22,7 +23,7 @@ public class ConnectionManager {
 		connectedThreads.add(thread);
 		InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer().getName() + " has joined the server!"));
 		
-		if ((connectedThreads.size() - 1) == 1) InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer(), "There are is 1 other user online."));
+		if ((connectedThreads.size() - 1) == 1) InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer(), "There is 1 other user online."));
 		else InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer(), "There are " + (connectedThreads.size() - 1) + " other users online."));
 	}
 	
@@ -66,6 +67,26 @@ public class ConnectionManager {
 		for (int i = connectedThreads.size() - 1; i >= 0; i--) {
 			saveData(connectedThreads.get(i));
 			connectedThreads.remove(i);
+		}
+	}
+	
+	public synchronized static boolean isUniqueUsername(User user) throws IOException {
+		
+		for (int i = 0; i < connectedThreads.size(); i++) {
+			if (user.getName().equals(connectedThreads.get(i).getPlayer().getName())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public synchronized static void sendData(ConnectionThread t, Object o) throws IOException {
+		
+		try {
+			t.getOutputStream().writeObject(o);
+		} catch (IOException e) {
+			ServerConsole.printMessage(new Message(SloverseServer.SERVER, "Error transmitting object over the network. :("));
+			e.printStackTrace();
 		}
 	}
 	

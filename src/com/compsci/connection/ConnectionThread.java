@@ -9,6 +9,7 @@ import java.util.logging.Level;
 
 import com.compsci.chat.InputManager;
 import com.compsci.chat.Message;
+import com.compsci.chat.ServerConsole;
 import com.compsci.core.SloverseServer;
 import com.compsci.user.Player;
 import com.compsci.util.SloverseLogger;
@@ -63,8 +64,17 @@ public class ConnectionThread extends Thread {
 				incoming = inStream.readObject();
 				
 				if (incoming != null && incoming instanceof Player) {
-					player = (Player)incoming;
-					break;
+					
+					Player incomingPlayer = (Player)incoming;
+					if (ConnectionManager.isUniqueUsername(incomingPlayer)) {
+						player = incomingPlayer;
+						ConnectionManager.sendData(this, new Boolean(true));
+						break;
+					}
+					else {
+						ServerConsole.printMessage(new Message(SloverseServer.SERVER, "Someone tried logging in with the same username: " + incomingPlayer.getName() + ". Rejected."));
+						ConnectionManager.sendData(this, new Boolean(false));
+					}
 				}
 			}
 			ConnectionManager.connectThread(this);
