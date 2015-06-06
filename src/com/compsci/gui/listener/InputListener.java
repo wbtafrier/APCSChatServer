@@ -26,11 +26,11 @@ public class InputListener extends KeyAdapter implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(FrameHandle.getInputField())) {
 			String s = FrameHandle.getInputField().getText();
-			if (!InputManager.isMessageAcceptable(s)) {
+			if (!InputManager.isMessageAcceptable(s) && s != null && !s.isEmpty()) {
 				SloverseLogger.logErrorMessage(Level.WARNING, "Message is not in the correct format! Will not print out message.");
 				return;
 			}
-			else {
+			else if (s != null && !s.isEmpty()) {
 				Message input = new Message(SloverseServer.SERVER, s);
 				
 				try {
