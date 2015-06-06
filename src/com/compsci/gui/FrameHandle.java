@@ -51,6 +51,7 @@ public class FrameHandle {
 			serverFrame = frame;
 			
 			customizeItem.addActionListener(menuListener);
+			customizeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.SHIFT_DOWN_MASK + KeyEvent.CTRL_DOWN_MASK));
 			customizeItem.setToolTipText("Modify the customize of the server console window.");
 			fileMenu.add(customizeItem);
 			exitItem.addActionListener(menuListener);
