@@ -11,7 +11,7 @@ import com.compsci.user.EnumAuthorityLevel;
 
 public class ChatManager {
 
-	private static boolean showPrivateMessage = false;
+	private static boolean showPrivateMessage = true;
 
 	/**
 	 * Filters the input depending if it is a public message, 
@@ -20,7 +20,6 @@ public class ChatManager {
 	 * @throws IOException 
 	 */
 	public static void filterMessage(Message m) throws IOException {
-		
 		if (m.getType().equals(EnumMessageType.PUBLIC)) {
 			publicMessage(m);
 		}
@@ -54,22 +53,22 @@ public class ChatManager {
 		boolean isServer = (m.getSender().getAuthority() == EnumAuthorityLevel.SERVER);
 
 		List<ConnectionThread> connectedThreads = ConnectionManager.getThreads();
+		int counter = 0;
 		for (ConnectionThread t : connectedThreads) {
+			if (counter == 2) {
+				break;
+			}
+			
 			String currentUser = t.getPlayer().getName();
 
 			if (currentUser.equals(m.getReceiver().getName()) || currentUser.equals(m.getSender().getName())) {
 				t.getOutputStream().writeObject(m);
-				
-				if (isServer) {
-					ServerConsole.printMessage(m);
-					return;
-				}
+				counter++;
 			}
 		}
 		
-		if (m.getSender().equals(SloverseServer.SERVER)) {
+		if (isServer || showPrivateMessage) {
 			ServerConsole.printMessage(m);
-			return;
 		}
 	}
 	
