@@ -11,7 +11,7 @@ public class Message implements Serializable {
 	private static final long serialVersionUID = 3900037731396757918L;
 	
 //	private static final int MAXIMUM_LENGTH = 300;
-	private String message;
+	protected String message;
 	private EnumMessageType type;
 	private User sender, receiver;
 	

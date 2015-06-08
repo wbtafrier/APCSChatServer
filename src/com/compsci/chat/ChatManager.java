@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.compsci.connection.ConnectionManager;
 import com.compsci.connection.ConnectionThread;
+import com.compsci.core.SloverseServer;
 import com.compsci.user.EnumAuthorityLevel;
 
 
@@ -51,7 +52,7 @@ public class ChatManager {
 	public static void privateMessage(Message m) throws IOException {
 		
 		boolean isServer = (m.getSender().getAuthority() == EnumAuthorityLevel.SERVER);
-		
+
 		List<ConnectionThread> connectedThreads = ConnectionManager.getThreads();
 		for (ConnectionThread t : connectedThreads) {
 			String currentUser = t.getPlayer().getName();
@@ -61,9 +62,14 @@ public class ChatManager {
 				
 				if (isServer) {
 					ServerConsole.printMessage(m);
-					break;
+					return;
 				}
 			}
+		}
+		
+		if (m.getSender().equals(SloverseServer.SERVER)) {
+			ServerConsole.printMessage(m);
+			return;
 		}
 	}
 	
