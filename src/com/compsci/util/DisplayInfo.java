@@ -41,4 +41,17 @@ public abstract class DisplayInfo {
 		}
 		return false;
 	}
+	
+	public static String getLongestFont() {
+		String[] fonts = ge.getAvailableFontFamilyNames();
+		int longestSize = 0;
+		String longestFont = null;
+		for (String f : fonts) {
+			if (f.length() > longestSize) {
+				longestSize = f.length();
+				longestFont = f;
+			}
+		}
+		return longestFont;
+	}
 }

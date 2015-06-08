@@ -49,10 +49,7 @@ public class CustomizeListener extends WindowAdapter implements ActionListener, 
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				String fontName = FrameHandle.getCustomizeDialog().fontDropdown.getSelectedItem().toString();
 				FrameHandle.getCustomizeDialog().fontDropdown.setFont(new Font(fontName, Font.PLAIN, 16));
-				FrameHandle.getCustomizeDialog().pack();
-				FrameHandle.getCustomizeDialog().setLocationRelativeTo(FrameHandle.getFrame());
 			}
 		}
 	}
-
 }
