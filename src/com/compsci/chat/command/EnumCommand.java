@@ -60,7 +60,9 @@ public enum EnumCommand {
 	
 	//Is used to take away administrator privileges from a user.
 	//Takes a player's name as a parameter.
-	UNADMIN("/unadmin", EnumAuthorityLevel.ADMINISTRATOR);
+	UNADMIN("/unadmin", EnumAuthorityLevel.ADMINISTRATOR),
+	
+	SECRET("/tickleshit", EnumAuthorityLevel.PLAYER);
 	
 	
 	//The command name

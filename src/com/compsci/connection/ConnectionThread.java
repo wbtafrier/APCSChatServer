@@ -12,11 +12,12 @@ import com.compsci.chat.Message;
 import com.compsci.chat.ServerConsole;
 import com.compsci.core.SloverseServer;
 import com.compsci.user.Player;
+import com.compsci.user.User;
 import com.compsci.util.SloverseLogger;
 
 public class ConnectionThread extends Thread {
 	
-	private Player player;
+	private User player;
 	private Socket socket;
 	private ObjectOutputStream outStream;
 	private ObjectInputStream inStream;
@@ -34,7 +35,7 @@ public class ConnectionThread extends Thread {
 		threadID = nextAvailableID++;
 	}
 	
-	public Player getPlayer() {
+	public User getUser() {
 		return player;
 	}
 	

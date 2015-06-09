@@ -21,10 +21,10 @@ public class ConnectionManager {
 	
 	public static synchronized void connectThread(ConnectionThread thread) throws IOException {
 		connectedThreads.add(thread);
-		InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer().getName() + " has joined the server!"));
+		InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getUser().getName() + " has joined the server!"));
 		
-		if ((connectedThreads.size() - 1) == 1) InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer(), "There is 1 other user online."));
-		else InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer(), "There are " + (connectedThreads.size() - 1) + " other users online."));
+		if ((connectedThreads.size() - 1) == 1) InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getUser(), "There is 1 other user online."));
+		else InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getUser(), "There are " + (connectedThreads.size() - 1) + " other users online."));
 	}
 	
 	public static synchronized void disconnectThread(ConnectionThread thread) {
@@ -32,33 +32,45 @@ public class ConnectionManager {
 		for (int i = 0; i < connectedThreads.size(); i++) {
 			if (connectedThreads.get(i).equals(thread)) {
 				saveData(thread);
-				connectedThreads.remove(i);
+				ConnectionThread t = connectedThreads.remove(i);
+				try {
+					InputManager.filterInput(new Message(SloverseServer.SERVER, t.getUser().getName() + " left the server."));
+					t.getSocket().close();
+				} catch (IOException e) {
+					System.out.println("Disconnected thread tried typing!");
+				}
 				break;
 			}
 		}
 		
-		try {
-			InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getPlayer().getName() + " left the server."));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getUser().getName() + " left the server."));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public static synchronized void disconnectThread(User user) {
 		
 		for (int i = 0; i < connectedThreads.size(); i++) {
-			if (connectedThreads.get(i).getPlayer().equals(user)) {
+			if (connectedThreads.get(i).getUser().equals(user)) {
 				saveData(connectedThreads.get(i));
-				connectedThreads.remove(i);
+				ConnectionThread t = connectedThreads.remove(i);
+				try {
+					InputManager.filterInput(new Message(SloverseServer.SERVER, t.getUser().getName() + " left the server."));
+					t.getSocket().close();
+				} catch (IOException e) {
+					System.out.println("Disconnected thread tried typing!");
+				}
 				break;
 			}
 		}
 		
-		try {
-			InputManager.filterInput(new Message(SloverseServer.SERVER, user.getName() + " left the server."));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			InputManager.filterInput(new Message(SloverseServer.SERVER, user.getName() + " left the server."));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public static synchronized void disconnectAllThreads() throws IOException {
@@ -77,7 +89,7 @@ public class ConnectionManager {
 		}
 		
 		for (int i = 0; i < connectedThreads.size(); i++) {
-			if (user.getName().equalsIgnoreCase(connectedThreads.get(i).getPlayer().getName())) {
+			if (user.getName().equalsIgnoreCase(connectedThreads.get(i).getUser().getName())) {
 				return false;
 			}
 		}

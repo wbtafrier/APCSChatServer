@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.compsci.connection.ConnectionManager;
 import com.compsci.connection.ConnectionThread;
-import com.compsci.core.SloverseServer;
 import com.compsci.user.EnumAuthorityLevel;
 
 
@@ -59,7 +58,7 @@ public class ChatManager {
 				break;
 			}
 			
-			String currentUser = t.getPlayer().getName();
+			String currentUser = t.getUser().getName();
 
 			if (currentUser.equals(m.getReceiver().getName()) || currentUser.equals(m.getSender().getName())) {
 				t.getOutputStream().writeObject(m);
