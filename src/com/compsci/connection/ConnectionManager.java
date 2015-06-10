@@ -21,6 +21,10 @@ public class ConnectionManager {
 	
 	public static synchronized void connectThread(ConnectionThread thread) throws IOException {
 		connectedThreads.add(thread);
+		for (ConnectionThread t : connectedThreads) {
+			t.getOutputStream().writeObject(thread.getUser());
+			thread.getOutputStream().writeObject(t.getUser());
+		}		
 		InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getUser().getName() + " has joined the server!"));
 		
 		if ((connectedThreads.size() - 1) == 1) InputManager.filterInput(new Message(SloverseServer.SERVER, thread.getUser(), "There is 1 other user online."));
