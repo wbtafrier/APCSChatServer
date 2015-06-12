@@ -58,6 +58,7 @@ public class FrameHandle {
 			exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, KeyEvent.ALT_MASK));
 			exitItem.setToolTipText("Stops the server and exits the server window.");
 			fileMenu.add(exitItem);
+			fileMenu.setMnemonic(KeyEvent.VK_F);
 			fileMenu.setToolTipText("File functions enable the user to interact with the server window.");
 			menuBar.add(fileMenu);
 			serverFrame.setJMenuBar(menuBar);

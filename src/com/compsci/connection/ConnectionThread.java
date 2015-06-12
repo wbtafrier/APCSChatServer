@@ -1,5 +1,6 @@
 package com.compsci.connection;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -94,8 +95,8 @@ public class ConnectionThread extends Thread {
 					}
 				}
 			}
-		} catch (SocketException e) {
-			SloverseLogger.logErrorMessage(Level.WARNING, "Connection Lost. Internal exception: " + e.getClass());
+		} catch (SocketException | EOFException e) {
+			SloverseLogger.logErrorMessage(Level.WARNING, "Connection Lost. Internal exception: " + e.getClass().toString());
 			//Show message to bring the user back to home screen.
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -115,7 +116,7 @@ public class ConnectionThread extends Thread {
 		System.out.println(this.threadID + " " + t.threadID);
 		
 		if (this.threadID == t.threadID) {
-			return  true;
+			return true;
 		}
 		return false;
 	}
