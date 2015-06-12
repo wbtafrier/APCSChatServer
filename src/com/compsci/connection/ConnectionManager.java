@@ -9,7 +9,9 @@ import com.compsci.chat.Message;
 import com.compsci.chat.ServerConsole;
 import com.compsci.chat.command.EnumCommand;
 import com.compsci.core.SloverseServer;
+import com.compsci.user.EnumAction;
 import com.compsci.user.User;
+import com.compsci.user.UserAction;
 
 public class ConnectionManager {
 
@@ -38,6 +40,8 @@ public class ConnectionManager {
 				saveData(thread);
 				ConnectionThread t = connectedThreads.remove(i);
 				try {
+					UserAction disconnect = new UserAction(t.getUser().getName(), EnumAction.DISCONNECT);
+					sendDataToAll(disconnect);
 					InputManager.filterInput(new Message(SloverseServer.SERVER, t.getUser().getName() + " left the server."));
 					t.getSocket().close();
 				} catch (IOException e) {
@@ -60,7 +64,9 @@ public class ConnectionManager {
 			if (connectedThreads.get(i).getUser().equals(user)) {
 				saveData(connectedThreads.get(i));
 				ConnectionThread t = connectedThreads.remove(i);
-				try {
+				try {            
+					UserAction disconnect = new UserAction(t.getUser().getName(), EnumAction.DISCONNECT);
+					sendDataToAll(disconnect);
 					InputManager.filterInput(new Message(SloverseServer.SERVER, t.getUser().getName() + " left the server."));
 					t.getSocket().close();
 				} catch (IOException e) {
@@ -107,6 +113,19 @@ public class ConnectionManager {
 		} catch (IOException e) {
 			ServerConsole.printMessage(new Message(SloverseServer.SERVER, "Error transmitting object over the network. :("));
 			e.printStackTrace();
+		}
+	}
+	
+	public synchronized static void sendDataToAll(Object o) throws IOException {
+		if (o != null) {
+			try {
+				for (ConnectionThread t : connectedThreads) {
+					t.getOutputStream().writeObject(o);
+				}
+			} catch (IOException e) {
+				ServerConsole.printMessage(new Message(SloverseServer.SERVER, "Error transmitting object over the network. :("));
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -90,7 +90,7 @@ public class ConnectionThread extends Thread {
 						InputManager.filterInput((Message) incoming);
 					}
 					else {
-						System.out.println("DERP");
+						SloverseLogger.logErrorMessage(Level.WARNING, "Unknown object received: " + incoming.toString());
 					}
 				}
 			}
