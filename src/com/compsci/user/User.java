@@ -51,6 +51,7 @@ public abstract class User implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.MUTE));
 		isMuted = true;
 	}
 	
@@ -60,6 +61,7 @@ public abstract class User implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.UNMUTE));
 		isMuted = false;
 	}
 	
@@ -87,6 +89,7 @@ public abstract class User implements Serializable {
 		if (isAdministrator)  isAdministrator = false;
 		isModerator = true;
 		setAuthority(EnumAuthorityLevel.MODERATOR);
+		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.MOD));
 	}
 	
 	public void removeModerator(User granter) {
@@ -99,6 +102,11 @@ public abstract class User implements Serializable {
 		}
 		isModerator = false;
 		setAuthority(EnumAuthorityLevel.PLAYER);
+		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.DEMOD));
+	}
+	
+	public boolean isAdministrator() {
+		return isAdministrator;
 	}
 	
 	public void setAdministator(User granter) {
@@ -111,6 +119,7 @@ public abstract class User implements Serializable {
 		if (isModerator) isModerator = false;
 		isAdministrator = true;
 		setAuthority(EnumAuthorityLevel.ADMINISTRATOR);
+		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.ADMIN));
 	}
 	
 	public void removeAdministrator(User granter) {
@@ -122,5 +131,6 @@ public abstract class User implements Serializable {
 		}
 		isAdministrator = false;
 		setAuthority(EnumAuthorityLevel.PLAYER);
+		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.DEADMIN));
 	}
 }
