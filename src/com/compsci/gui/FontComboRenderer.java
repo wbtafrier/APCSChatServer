@@ -11,6 +11,7 @@ public class FontComboRenderer<E> extends BasicComboBoxRenderer {
 	private static final long serialVersionUID = -7894186927041296041L;
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		Object fontObj = value;

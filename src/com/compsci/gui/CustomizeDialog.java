@@ -2,7 +2,6 @@ package com.compsci.gui;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -36,8 +35,10 @@ public class CustomizeDialog extends JDialog {
 	public JButton doneButton = new JButton("Done");
 	
 	public CustomizeListener customizeListener = new CustomizeListener();
+	@SuppressWarnings("rawtypes")
 	private FontComboRenderer comboRenderer = new FontComboRenderer();
 	
+	@SuppressWarnings("unchecked")
 	public CustomizeDialog() {
 		super(FrameHandle.getFrame(), "Sloverse Server - Customize");
 		customizePanel.setLayout(new BoxLayout(customizePanel, BoxLayout.Y_AXIS));
