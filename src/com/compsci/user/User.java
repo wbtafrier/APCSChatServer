@@ -102,7 +102,7 @@ public abstract class User implements Serializable {
 		}
 		isModerator = false;
 		setAuthority(EnumAuthorityLevel.PLAYER);
-		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.DEMOD));
+		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.UNMOD));
 	}
 	
 	public boolean isAdministrator() {
@@ -131,6 +131,6 @@ public abstract class User implements Serializable {
 		}
 		isAdministrator = false;
 		setAuthority(EnumAuthorityLevel.PLAYER);
-		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.DEADMIN));
+		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.UNADMIN));
 	}
 }
