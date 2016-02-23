@@ -16,6 +16,7 @@ public abstract class User implements Serializable {
 	private EnumAuthorityLevel authority;
 	private boolean isMuted;
 	private boolean isBanned;
+	private boolean isAFK;
 	
 	private boolean isModerator;
 	private boolean isAdministrator;
@@ -37,6 +38,35 @@ public abstract class User implements Serializable {
 		return name;
 	}
 	
+	public void setName(String newName) {
+		try {
+			InputManager.filterInput(new Message(SloverseServer.SERVER, this.getName() + "'s changed nickname to " + newName + "."));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ConnectionManager.sendDataToAll(new UserAction(this, newName, EnumAction.NICK));
+		name = newName;
+	}
+	
+	public boolean isAFK() {
+		return isAFK;
+	}
+	
+	public void setAFK() {
+		try {
+			if (!isAFK) {
+				InputManager.filterInput(new Message(SloverseServer.SERVER, this.getName() + " went AFK."));
+			}
+			else {
+				InputManager.filterInput(new Message(SloverseServer.SERVER, this.getName() + " is not AFK anymore."));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		isAFK = !isAFK;
+		ConnectionManager.sendDataToAll(new UserAction(this, isAFK, EnumAction.AFK));
+	}
+	
 	public boolean isMuted() {
 		return isMuted;
 	}
@@ -51,7 +81,7 @@ public abstract class User implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.MUTE));
+		ConnectionManager.sendDataToAll(new UserAction(this, EnumAction.MUTE));
 		isMuted = true;
 	}
 	
@@ -61,7 +91,7 @@ public abstract class User implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.UNMUTE));
+		ConnectionManager.sendDataToAll(new UserAction(this, EnumAction.UNMUTE));
 		isMuted = false;
 	}
 	
@@ -89,7 +119,7 @@ public abstract class User implements Serializable {
 		if (isAdministrator)  isAdministrator = false;
 		isModerator = true;
 		setAuthority(EnumAuthorityLevel.MODERATOR);
-		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.MOD));
+		ConnectionManager.sendDataToAll(new UserAction(this, EnumAction.MOD));
 	}
 	
 	public void removeModerator(User granter) {
@@ -102,7 +132,7 @@ public abstract class User implements Serializable {
 		}
 		isModerator = false;
 		setAuthority(EnumAuthorityLevel.PLAYER);
-		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.UNMOD));
+		ConnectionManager.sendDataToAll(new UserAction(this, EnumAction.UNMOD));
 	}
 	
 	public boolean isAdministrator() {
@@ -119,7 +149,7 @@ public abstract class User implements Serializable {
 		if (isModerator) isModerator = false;
 		isAdministrator = true;
 		setAuthority(EnumAuthorityLevel.ADMINISTRATOR);
-		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.ADMIN));
+		ConnectionManager.sendDataToAll(new UserAction(this, EnumAction.ADMIN));
 	}
 	
 	public void removeAdministrator(User granter) {
@@ -131,6 +161,6 @@ public abstract class User implements Serializable {
 		}
 		isAdministrator = false;
 		setAuthority(EnumAuthorityLevel.PLAYER);
-		ConnectionManager.sendDataToAll(new UserAction(this.getName(), EnumAction.UNADMIN));
+		ConnectionManager.sendDataToAll(new UserAction(this, EnumAction.UNADMIN));
 	}
 }

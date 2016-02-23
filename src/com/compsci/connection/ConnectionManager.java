@@ -42,7 +42,7 @@ public class ConnectionManager {
 				saveData(thread);
 				ConnectionThread t = connectedThreads.remove(i);
 				try {
-					UserAction disconnect = new UserAction(t.getUser().getName(), EnumAction.DISCONNECT);
+					UserAction disconnect = new UserAction(t.getUser(), EnumAction.DISCONNECT);
 					sendDataToAll(disconnect);
 					InputManager.filterInput(new Message(SloverseServer.SERVER, t.getUser().getName() + " left the server."));
 					t.getSocket().close();

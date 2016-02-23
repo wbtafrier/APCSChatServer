@@ -62,8 +62,13 @@ public enum EnumCommand {
 	//Takes a player's name as a parameter.
 	UNADMIN("/unadmin", EnumAuthorityLevel.ADMINISTRATOR),
 	
-	SECRET("/tickleshit", EnumAuthorityLevel.PLAYER);
+	SECRET("/tickleshit", EnumAuthorityLevel.PLAYER),
 	
+	//Is used to change usernames.
+	//Takes the new username as a parameter.
+	NICK("/nick", EnumAuthorityLevel.PLAYER),
+	
+	AFK("/afk", EnumAuthorityLevel.PLAYER);
 	
 	//The command name
 	private final String COMMAND_NAME;

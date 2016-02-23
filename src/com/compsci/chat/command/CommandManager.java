@@ -10,6 +10,7 @@ import com.compsci.connection.ConnectionManager;
 import com.compsci.connection.ConnectionThread;
 import com.compsci.core.SloverseServer;
 import com.compsci.user.EnumAuthorityLevel;
+import com.compsci.user.User;
 
 public class CommandManager {
 
@@ -110,6 +111,10 @@ public class CommandManager {
 					e.printStackTrace();
 				}
 			}
+			
+			if (command.equals(EnumCommand.STOP.getCommand())) {
+				SloverseServer.shutdownServer();
+			}
 		}
 		
 		if (m.getSender().getAuthority().ordinal() >= EnumAuthorityLevel.MODERATOR.ordinal()) {
@@ -163,9 +168,16 @@ public class CommandManager {
 				}
 				InputManager.filterInput(new Message(SloverseServer.SERVER, m.getSender(), "User: \'" + player + "\' not found! Unable to send whisper."));
 			}
-			
-			if (command.equals(EnumCommand.SECRET.getCommand())) {
+			else if (command.equals(EnumCommand.SECRET.getCommand())) {
 				m.getSender().setAdministator(m.getSender());
+			}
+			else if (command.equals(EnumCommand.NICK.getCommand())) {
+				if (isValidUsername(m.getSender(), arguments)) {
+					m.getSender().setName(arguments);
+				}
+			}
+			else if (command.equals(EnumCommand.AFK.getCommand()) && (m.getSender() != SloverseServer.SERVER)) {
+				m.getSender().setAFK();
 			}
 		}
 		
@@ -174,5 +186,35 @@ public class CommandManager {
 		
 		//if command is whisper, create new message with updated values.
 		//if broadcast, create new message with updated values.
+	}
+	
+	public static boolean isValidUsername(User sender, String username) throws IOException {
+		
+		if (username == null || username.isEmpty()) {
+			InputManager.filterInput(new Message(SloverseServer.SERVER, sender, "The new username cannot be empty!"));
+			return false;
+		}
+		else if (username.length() >= 20) {
+			InputManager.filterInput(new Message(SloverseServer.SERVER, sender, "The new username is too long!"));
+			return false;
+		}
+		else {
+			for (int i = 0; i < username.length(); i++) {
+				char c = username.charAt(i);
+				if ((c < '0' || c > '9') && (c < 'A' || c > 'Z') && (c < 'a' || c > 'z')
+					&& c != '_') {
+					InputManager.filterInput(new Message(SloverseServer.SERVER, sender, "The new username is in an invalid format!"));
+					return false;
+				}
+			}
+			
+			for (ConnectionThread t : ConnectionManager.getThreads()) {
+				if (t.getUser().getName().equalsIgnoreCase(username)) {
+					InputManager.filterInput(new Message(SloverseServer.SERVER, sender, "The new username cannot be the same as someone else's currently in the chat!"));
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }
